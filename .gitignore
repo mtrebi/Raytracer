@@ -1,6 +1,6 @@
 # Netbeans
 .dep.inc
-
+nb-project/
 # Compiled Object files
 *.slo
 *.lo
