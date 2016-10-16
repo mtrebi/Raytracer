@@ -1,6 +1,11 @@
 # Netbeans
 .dep.inc
 nb-project/
+
+# Generated folders
+dist/
+build/
+
 # Compiled Object files
 *.slo
 *.lo
