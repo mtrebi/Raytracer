@@ -1,6 +1,6 @@
 # Netbeans
 .dep.inc
-nb-project/
+nbproject/
 
 # Generated folders
 dist/
