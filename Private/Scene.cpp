@@ -20,7 +20,7 @@
 #include "Objects/Shapes/Box.h"
 #include "Objects/Shapes/Sphere.h"
 #include "Utils/Ray.h"
-
+#include "Utils/HSVColour.h"
 Scene::Scene(){
     m_shapes = std::vector<Shape*>();
     m_light = nullptr;
@@ -81,45 +81,69 @@ const Image& Scene::render2d(const uint16_t width, const uint16_t height) const{
     
     for (uint32_t x = 0; x < width; ++x){
         for (uint32_t y = 0; y < height; ++y){
-            IntersectionInfo newHit, 
-                    closestHit {.hit = false,
-                            .hitDistance = std::numeric_limits<float>::max(),
-                            .hitPoint = Vec3(0,0,0),
-                            .hitNormal = Vec3(0,0,0),
-                            .hitShape = nullptr};
-            RGBColour colour{255, 255, 255};
-            for(const Shape* shape: m_shapes){
-                // Compute Ray trace against Shape
-                const Vec3 pixelPosition = pixelToWorldSpace(x, y, width, height, m_camera->getFOV());
-                Vec3 rayDirection = pixelPosition - m_camera->getLocation(); rayDirection.normalize();
-                const Ray ray = Ray(m_camera->getLocation(), rayDirection);
-                const bool hit = shape->intersect(newHit, ray);
-                if (hit && closestHit.hitDistance > newHit.hitDistance){
-                    closestHit = newHit;   
-                    //TODO CHECK info (shadow, reflections, refractions, normal)
-                }
-            }
+            const Vec3 pixelPosition = pixelToWorldSpace(x, y, width, height, m_camera->getFOV());
             
-            if (closestHit.hit){
-                /* Compute illumination
-                for(const Shape* shape: m_shapes){
-                    Vec3 rayLightDirection = m_light->getLocation() - closestHit.hitPoint; rayLightDirection.normalize();
-                    const Ray raylight = Ray(closestHit.hitPoint, rayLightDirection);
-                    const bool hit = shape->intersect(newHit, raylight);
-                    if (hit){
-                        //SHADOW!
-                        //colour = colour
-                    }
-                 
-                   
-                } */
-                colour = closestHit.hitShape->getColour();
+            // Visibility trace - get color 
+            Vec3 visibilityRayDirection = pixelPosition - m_camera->getLocation(); visibilityRayDirection.normalize();
+            const Ray visibilityRay = Ray(m_camera->getLocation(), visibilityRayDirection);
+            const IntersectionInfo visibilityInfo = visibilityTrace(visibilityRay);
+            
+            if (!visibilityInfo.hit){
+                image->setPixelColour(x, y, BACKGROUND_COLOR); 
+            }else {
+                // Light trace - get amount of light 
+                Vec3 lightRayDirection = m_light->getLocation() - visibilityInfo.hitPoint; lightRayDirection.normalize();
+                const Ray lightRay = Ray(visibilityInfo.hitPoint, lightRayDirection);
+                const float brightness = lightTrace(lightRay);
+
+                HSVColour hsvColour = HSVColour(visibilityInfo.hitShape->getColour());
+                hsvColour.modifyBrightness(brightness);
+
+                const RGBColour pixelColour = RGBColour(hsvColour);
+                image->setPixelColour(x, y, pixelColour); 
             }
-            image->setPixelColour(x, y, colour);
         }
     }
     return *image;
 }
+
+const IntersectionInfo Scene::visibilityTrace(const Ray& visibilityRay) const {
+    IntersectionInfo newHit, 
+            closestHit {.hit = false,
+                    .hitDistance = std::numeric_limits<float>::max(),
+                    .hitPoint = Vec3(0,0,0),
+                    .hitNormal = Vec3(0,0,0),
+                    .hitShape = nullptr};
+                    
+    for(const Shape* shape: m_shapes){
+        const bool hit = shape->intersect(newHit, visibilityRay);
+        if (hit && closestHit.hitDistance > newHit.hitDistance){
+            closestHit = newHit;   
+        }
+    }
+    return closestHit;
+}
+
+const float Scene::lightTrace(const Ray& lightRay) const {
+  
+    IntersectionInfo hitInfo {.hit = false,
+                .hitDistance = std::numeric_limits<float>::max(),
+                .hitPoint = Vec3(0,0,0),
+                .hitNormal = Vec3(0,0,0),
+                .hitShape = nullptr};
+
+    for(const Shape* shape: m_shapes){
+        if (shape->intersect(hitInfo, lightRay)){
+            break;
+        }
+    }
+    if (hitInfo.hit){ 
+        // Shadowed
+        return 0.3; //TODO distance?
+    }
+    return 1;
+}
+
 
 Scene::~Scene(){
     m_shapes.clear();

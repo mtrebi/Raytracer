@@ -37,13 +37,18 @@ public:
     void addLight(Light* light);
 
     friend std::ostream& operator << (std::ostream& out, Scene& scene);
-    
-    virtual ~Scene();   
+
+    virtual ~Scene();  
+private:
+    const IntersectionInfo visibilityTrace(const Ray& ray) const;
+    const float lightTrace (const Ray& ray) const;
 private:
     //TODO built-in
     Camera * m_camera;
     Light * m_light;
     std::vector<Shape*> m_shapes;
+
+    const RGBColour BACKGROUND_COLOR = RGBColour(255,255,255);
 };
 
 #endif /* SCENE_H */
