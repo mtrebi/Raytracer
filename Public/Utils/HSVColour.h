@@ -33,13 +33,15 @@ public:
     friend std::istream& operator >> (std::istream& is, HSVColour& colour);
     friend std::ostream& operator << (std::ostream& os, HSVColour& colour);
 
+    // Functions
+    void modifyBrightness(const float brightnessFactor);
     
     // Destructors
     virtual ~HSVColour();
 private:
-    float m_hue,
-            m_saturation,
-            m_value;
+    float m_hue,            // From 0 to 360
+            m_saturation,   // From 0 to 1
+            m_value;        // From 0 to 1
 };
 
 #endif /* HSVCOLOUR_H */

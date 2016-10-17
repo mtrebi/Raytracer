@@ -80,4 +80,7 @@ std::istream& operator >> (std::istream& is, HSVColour& colour){
 std::ostream& operator << (std::ostream& os, HSVColour& colour){
     os << "(H= " << colour.m_hue << " S= " << colour.m_saturation << " V= " << colour.m_value << ")";
 }
-
+// brightness between 0 and 1
+void HSVColour::modifyBrightness(const float brightness){
+    m_value = brightness;
+}
