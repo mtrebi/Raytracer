@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Objects/Shapes/Sphere.h"
 #include "Output/Image_impl1.h"
+#include "Utils/HSVColour.h"
 
 void create_image_test(const std::string &name){
     std::cout << "Main: Creating image..." ;
@@ -80,6 +81,29 @@ void full_2drender_test2(const std::string outputFile){
     std::cout << "Completed" << std::endl; 
 }
 
+void test_hsv_rgb_conversion(){
+    RGBColour rgb1 = RGBColour(10, 20, 30);
+    RGBColour rgb2 = RGBColour(15,15,255);
+    RGBColour rgb3 = RGBColour(0,112,135);
+
+    HSVColour hsv1 = HSVColour(rgb1);
+    HSVColour hsv2 = HSVColour(rgb2);
+    HSVColour hsv3 = HSVColour(rgb3);
+    
+    RGBColour rgb11 = RGBColour(hsv1);
+    RGBColour rgb22 = RGBColour(hsv2);
+    RGBColour rgb33 = RGBColour(hsv3);
+        
+    std::cout << "HSV1" << hsv1 << std::endl;
+    std::cout << "HSV2" << hsv2 << std::endl;
+    std::cout << "HSV2" << hsv3 << std::endl;
+
+    std::cout << "RGB1" << rgb11 << std::endl;
+    std::cout << "RGB2" << rgb22 << std::endl;
+    std::cout << "RGB3" << rgb33 << std::endl;
+    
+    
+}
 
 int main(int argc, char** argv) {
     
@@ -87,8 +111,8 @@ int main(int argc, char** argv) {
     //generate_random_image_test("test-random-image");
     //read_scene_test("scene-input");
     //full_2drender_test("scene-input", "test-image");
-    full_2drender_test2("test-image");
-
+    //full_2drender_test2("test-image");
+    test_hsv_rgb_conversion();
     return 0;
 }
 
