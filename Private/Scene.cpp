@@ -157,13 +157,9 @@ const float Scene::shadowTrace(const Ray& lightRay) const {
 const float Scene::LambertianShading(const Vec3& hitPoint, const Vec3& hitPointNormal) const {
     // TODO: loop multiple lights!
     
-    Vec3 lightDirection = (hitPoint, m_light->getLocation()); lightDirection.normalize();
-    const float cosineCoeff = lightDirection.dot(hitPointNormal);    
-    if (cosineCoeff <= 0){
-        return AMBIENT_COEFFICIENT;
-    }else {
-        return std::fmin(1.0, AMBIENT_COEFFICIENT + (cosineCoeff) * DIFFUSE_COEFFICIENT);
-    }
+    Vec3 towardLightDirection = (m_light->getLocation() - hitPoint); towardLightDirection.normalize();
+    const float cosineCoeff = towardLightDirection.dot(hitPointNormal);    
+    return std::fmin(1.0, AMBIENT_COEFFICIENT + std::fmax(cosineCoeff * DIFFUSE_COEFFICIENT, 0));
 }
 
 //TODO Move to pixel?
