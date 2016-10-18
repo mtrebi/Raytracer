@@ -49,6 +49,13 @@ private:
     std::vector<Shape*> m_shapes;
 
     const RGBColour BACKGROUND_COLOR = RGBColour(0,0,0);
+    // Min. amount of light that can receive and object
+    const float AMBIENT_COEFFICIENT = 0.2;                  
+    // Amount of light determined by the Lambertian/cosine shading
+    const float DIFFUSE_COEFFICIENT = 1 - AMBIENT_COEFFICIENT;
+    // Black sh
+    const float HARD_SHADOWS_COEFFICIENT = 0.3;
+
 };
 
 #endif /* SCENE_H */

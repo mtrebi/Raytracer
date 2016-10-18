@@ -142,7 +142,7 @@ const float Scene::shadowTrace(const Ray& lightRay) const {
     }
     if (hit){ 
         // Shadowed
-        return 0.3; //TODO distance?
+        return HARD_SHADOWS_COEFFICIENT; //TODO distance?
     }
     return 1;
 }
