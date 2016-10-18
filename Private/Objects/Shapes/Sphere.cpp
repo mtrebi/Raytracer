@@ -16,7 +16,7 @@
 Sphere::Sphere() {
 }
 
-Sphere::Sphere(const Vec3& location, const RGBColour& colour, const uint16_t radius)
+Sphere::Sphere(const Vec3& location, const RGBColour& colour, const float radius)
     : Shape(location, colour) {
     m_radius = radius;
 }
@@ -26,14 +26,6 @@ Sphere::~Sphere() {
 
 
 bool Sphere::intersect(IntersectionInfo &outInfo, const Ray& ray) const {
-    
-    /*
-    float a = sum(ray.getDirection() *ray.getDirection());
-    float b = sum(ray.getDirection() * (2.0f * ( ray.getOrigin() - m_location)));
-    float c = sum(m_location*m_location) + sum(ray.getOrigin()*ray.getOrigin()) -2.0f*sum(ray.getOrigin()*m_location) - m_radius * m_radius;
-    float D = b*b + (-4.0f)*a*c;
-     * */
-    
     float a = Vec3::dot(ray.getDirection(), ray.getDirection());
     float b = Vec3::dot(ray.getDirection(),  (2.0f * ( ray.getOrigin() - m_location)));
     float c = Vec3::dot(m_location, m_location) + Vec3::dot(ray.getOrigin(), ray.getOrigin()) -2.0f*Vec3::dot(ray.getOrigin(),m_location) - m_radius * m_radius;
@@ -59,16 +51,6 @@ bool Sphere::intersect(IntersectionInfo &outInfo, const Ray& ray) const {
         return false;
     }
     return true;
-   /*
-    outInfo.hit = false;   
-    outInfo.hit = true;
-    outInfo.hitDistance = 0;
-    outInfo.hitPoint = Vec3(0,0,0); // TODO
-    outInfo.hitNormal = Vec3(0,0,0); //TODO
-    outInfo.hitShape = sphere;
-    
-    return true;*/
-
 }
 
 

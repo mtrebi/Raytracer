@@ -21,9 +21,9 @@
 class Sphere : public Shape{
 public:
     Sphere();
-    Sphere(const Vec3& location, const RGBColour& Color, const uint16_t radius);
+    Sphere(const Vec3& location, const RGBColour& Color, const float radius);
 
-    const uint16_t getRadius() const { return m_radius; }
+    const float getRadius() const { return m_radius; }
     const Vec3 getCenter() const { return m_center; }
 
     virtual bool intersect(IntersectionInfo &outInfo, const Ray& ray) const override;
@@ -36,7 +36,7 @@ public:
 
     virtual ~Sphere();
 private:
-    uint16_t m_radius;
+    float m_radius;
     Vec3 m_center;
 };
 
