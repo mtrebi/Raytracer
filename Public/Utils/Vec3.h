@@ -43,7 +43,7 @@ public:
     friend std::istream& operator >> (std::istream& is, Vec3& vec3);
     friend std::ostream& operator << (std::ostream& os, Vec3& vec3);
     
-    const float distance (Vec3& vec3) const;
+    const float distance (const Vec3& vec3) const;
     
     const float length() const ;
     

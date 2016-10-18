@@ -35,7 +35,7 @@ std::ostream& operator << (std::ostream& os, Vec3& vec3){
     os << "VECTOR(" << vec3.m_x << ", " << vec3.m_y << ", " << vec3.m_z << ") " ;
 }
 
-const float Vec3::distance (Vec3& vec3) const {
+const float Vec3::distance (const Vec3& vec3) const {
     return sqrt(pow((m_x - vec3.m_x), 2) +
            pow((m_y - vec3.m_y), 2) +
            pow((m_z - vec3.m_z), 2));
