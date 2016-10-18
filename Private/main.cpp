@@ -10,6 +10,8 @@
 #include <ctime>
 #include "Scene.h"
 #include "Objects/Shapes/Sphere.h"
+#include "Objects/Shapes/Plane.h"
+
 #include "Output/Image_impl1.h"
 #include "Utils/HSVColour.h"
 
@@ -66,14 +68,22 @@ void full_2drender_test(const std::string inputFile, const std::string outputFil
 void full_2drender_test2(const std::string outputFile){
     std::cout << "Main: Generating scene..." ;
     Scene* scene = new Scene();
-    scene->addShape(new Sphere(Vec3(3,0,-10), RGBColour(125,25,125), 2));
-    scene->addShape(new Sphere(Vec3(0,0,-5), RGBColour(10,130,150), 2));
+    scene->addShape(new Sphere(Vec3(3,0,-5), RGBColour(255,0,0), 2));
+    scene->addShape(new Sphere(Vec3(-3,0,-5), RGBColour(0,0,255), 1.5));
+    scene->addShape(new Sphere(Vec3(-2,-2,-7), RGBColour(0,255,0), 1));
+    //scene->addShape(new Sphere(Vec3(0,1,-1), RGBColour(0,255,0), .1));
+    //scene->addShape(new Sphere(Vec3(1,0,-1), RGBColour(0,0,255), .1));
+
+    scene->addShape(new Sphere(Vec3(1,104,-1), RGBColour(0,0,0), 100));
+
+    //scene->addShape(new Plane(Vec3(0,0,0), RGBColour(0, 0, 0), Vec3(0, 1, 0), 2));
+
     scene->addCamera(new Camera(Vec3(0,0,1), 90));
-    scene->addLight(new Light(Vec3(0,10,0), 10));
+    scene->addLight(new Light(Vec3(5,-10,0), 10));
     std::cout << "Completed" << std::endl;
 
     std::cout << "Main: Rendering...";    
-    const Image& generatedImage = scene->render2d(640, 480);
+    const Image& generatedImage = scene->render2d(1920, 1080);
     std::cout << "Completed" << std::endl;
 
     std::cout << "Main: Saving result in file " << outputFile << "...";    
@@ -111,8 +121,8 @@ int main(int argc, char** argv) {
     //generate_random_image_test("test-random-image");
     //read_scene_test("scene-input");
     //full_2drender_test("scene-input", "test-image");
-    //full_2drender_test2("test-image");
-    test_hsv_rgb_conversion();
+    full_2drender_test2("test-image");
+    //test_hsv_rgb_conversion();
     return 0;
 }
 
