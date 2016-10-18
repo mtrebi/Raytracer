@@ -83,6 +83,7 @@ const Image& Scene::render2d(const uint16_t width, const uint16_t height) const{
     
     for (uint32_t x = 0; x < width; ++x){
         for (uint32_t y = 0; y < height; ++y){
+            // TODO Refactor: Visibility - Ilulumination
             RGBColour pixelColour = BACKGROUND_COLOR;
             const Vec3 pixelPosition = pixelToWorldSpace(x, y, width, height, m_camera->getFOV());
             
@@ -156,10 +157,8 @@ const float Scene::shadowTrace(const Ray& lightRay) const {
 
 const float Scene::LambertianShading(const Vec3& hitPoint, const Vec3& hitPointNormal) const {
     // TODO: loop multiple lights!
-    
     Vec3 towardLightDirection = (m_light->getLocation() - hitPoint); towardLightDirection.normalize();
-    const float cosineCoeff = towardLightDirection.dot(hitPointNormal);    
-    return std::fmin(1.0, AMBIENT_COEFFICIENT + std::fmax(cosineCoeff * DIFFUSE_COEFFICIENT, 0));
+    return DIFFUSE_COEFFICIENT * std::fmax(0, towardLightDirection.dot(hitPointNormal));
 }
 
 //TODO Move to pixel?
