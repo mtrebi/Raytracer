@@ -58,8 +58,8 @@ Scene::Scene(const std::string inputFile){
 }
 
 Vec3 pixelToWorldSpace(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, const uint16_t fov){   
-    float fwidth = static_cast<float>(width);
-    float fheight = static_cast<float>(height);
+    const float fwidth = static_cast<float>(width);
+    const float fheight = static_cast<float>(height);
     const float aspectRatio = fwidth/fheight;
     
     // Map values between from (0, height) to [-1,1] for y, 
@@ -73,6 +73,7 @@ Vec3 pixelToWorldSpace(const uint16_t x, const uint16_t y, const uint16_t width,
     const float xCameraSpace = xScreenSpace * tan(M_PI * 0.5 * fov / 180.); 
     const float yCameraSpace = yScreenSpace * tan(M_PI * 0.5 * fov / 180.); 
     
+    //TODO !!!! -y
     return Vec3(xCameraSpace, yCameraSpace, -1);    
 }
 
@@ -91,10 +92,10 @@ const Image& Scene::render2d(const uint16_t width, const uint16_t height) const{
             if (!visibilityInfo.hit){
                 image->setPixelColour(x, y, BACKGROUND_COLOR); 
             }else {
-                // Light trace - get amount of light 
-                Vec3 lightRayDirection = m_light->getLocation() - visibilityInfo.hitPoint; lightRayDirection.normalize();
-                const Ray lightRay = Ray(visibilityInfo.hitPoint, lightRayDirection);
-                const float brightness = lightTrace(lightRay);
+                // Shadow trace - get if pixel is shadowed
+                Vec3 shadowRayDirection = m_light->getLocation() - visibilityInfo.hitPoint; shadowRayDirection.normalize();
+                const Ray shadowRay = Ray(visibilityInfo.hitPoint, shadowRayDirection);
+                const float brightness = shadowTrace(shadowRay);
 
                 HSVColour hsvColour = HSVColour(visibilityInfo.hitShape->getColour());
                 hsvColour.modifyBrightness(brightness);
@@ -124,20 +125,22 @@ const IntersectionInfo Scene::visibilityTrace(const Ray& visibilityRay) const {
     return closestHit;
 }
 
-const float Scene::lightTrace(const Ray& lightRay) const {
+const float Scene::shadowTrace(const Ray& lightRay) const {
   
     IntersectionInfo hitInfo {.hit = false,
                 .hitDistance = std::numeric_limits<float>::max(),
                 .hitPoint = Vec3(0,0,0),
                 .hitNormal = Vec3(0,0,0),
                 .hitShape = nullptr};
-
+    bool hit = false;
     for(const Shape* shape: m_shapes){
-        if (shape->intersect(hitInfo, lightRay)){
+        shape->intersect(hitInfo, lightRay);
+        hit = hitInfo.hitShape != nullptr && hitInfo.hitShape != shape;
+        if (hit){
             break;
         }
     }
-    if (hitInfo.hit){ 
+    if (hit){ 
         // Shadowed
         return 0.3; //TODO distance?
     }
