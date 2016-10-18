@@ -16,6 +16,7 @@
 #include <string>
 #include <limits>
 #include <math.h>
+#include <algorithm>    // std::min
 #include "Scene.h"
 #include "Objects/Shapes/Box.h"
 #include "Objects/Shapes/Sphere.h"
@@ -82,6 +83,7 @@ const Image& Scene::render2d(const uint16_t width, const uint16_t height) const{
     
     for (uint32_t x = 0; x < width; ++x){
         for (uint32_t y = 0; y < height; ++y){
+            RGBColour pixelColour = BACKGROUND_COLOR;
             const Vec3 pixelPosition = pixelToWorldSpace(x, y, width, height, m_camera->getFOV());
             
             // Visibility trace - get color 
@@ -89,20 +91,24 @@ const Image& Scene::render2d(const uint16_t width, const uint16_t height) const{
             const Ray visibilityRay = Ray(m_camera->getLocation(), visibilityRayDirection);
             const IntersectionInfo visibilityInfo = visibilityTrace(visibilityRay);
             
-            if (!visibilityInfo.hit){
-                image->setPixelColour(x, y, BACKGROUND_COLOR); 
-            }else {
-                // Shadow trace - get if pixel is shadowed
-                Vec3 shadowRayDirection = m_light->getLocation() - visibilityInfo.hitPoint; shadowRayDirection.normalize();
-                const Ray shadowRay = Ray(visibilityInfo.hitPoint, shadowRayDirection);
-                const float brightness = shadowTrace(shadowRay);
-
-                HSVColour hsvColour = HSVColour(visibilityInfo.hitShape->getColour());
-                hsvColour.modifyBrightness(brightness);
-
-                const RGBColour pixelColour = RGBColour(hsvColour);
-                image->setPixelColour(x, y, pixelColour); 
-            }
+            if (visibilityInfo.hit){
+                pixelColour = visibilityInfo.hitShape->getColour();
+                
+                if (FLAG_LAMBERTIAN_SHADING){
+                    const float lambertianShadingCoefficient = LambertianShading(visibilityInfo.hitPoint, visibilityInfo.hitNormal);
+                    pixelColour = shadeColour(pixelColour, lambertianShadingCoefficient);
+                }
+                if (FLAG_HARD_SHADOWS){
+                    Vec3 shadowRayDirection = m_light->getLocation() - visibilityInfo.hitPoint; shadowRayDirection.normalize();
+                    const Ray shadowRay = Ray(visibilityInfo.hitPoint, shadowRayDirection);
+                    const float hardShadowBrightness = shadowTrace(shadowRay);
+                    if (hardShadowBrightness <= HARD_SHADOWS_COEFFICIENT){
+                        // Pixel is shadowed
+                        pixelColour = shadeColour(pixelColour, hardShadowBrightness);
+                    }
+                }  
+            }     
+            image->setPixelColour(x, y, pixelColour); 
         }
     }
     return *image;
@@ -143,8 +149,29 @@ const float Scene::shadowTrace(const Ray& lightRay) const {
     if (hit){ 
         // Shadowed
         return HARD_SHADOWS_COEFFICIENT; //TODO distance?
+    }else {
+        return 1;
     }
-    return 1;
+}
+
+const float Scene::LambertianShading(const Vec3& hitPoint, const Vec3& hitPointNormal) const {
+    // TODO: loop multiple lights!
+    
+    Vec3 lightDirection = (hitPoint, m_light->getLocation()); lightDirection.normalize();
+    const float cosineCoeff = lightDirection.dot(hitPointNormal);    
+    if (cosineCoeff <= 0){
+        return AMBIENT_COEFFICIENT;
+    }else {
+        return std::fmin(1.0, AMBIENT_COEFFICIENT + (cosineCoeff) * DIFFUSE_COEFFICIENT);
+    }
+}
+
+//TODO Move to pixel?
+const RGBColour Scene::shadeColour(const RGBColour& colourToShade, const float shading_factor) const {
+    HSVColour hsvColour = HSVColour(colourToShade);
+    hsvColour.modifyBrightness(std::fmin(shading_factor,1));
+
+    return RGBColour(hsvColour);
 }
 
 

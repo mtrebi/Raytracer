@@ -42,20 +42,26 @@ public:
 private:
     const IntersectionInfo visibilityTrace(const Ray& ray) const;
     const float shadowTrace (const Ray& ray) const;
+    const float LambertianShading(const Vec3& hitPoint, const Vec3& hitPointNormal) const;
+
+    const RGBColour shadeColour(const RGBColour& colour, const float shading_factor) const;
 private:
     //TODO built-in
     Camera * m_camera;
     Light * m_light;
     std::vector<Shape*> m_shapes;
 
-    const RGBColour BACKGROUND_COLOR = RGBColour(0,0,0);
+    const RGBColour BACKGROUND_COLOR = RGBColour(255,255,255);
     // Min. amount of light that can receive and object
-    const float AMBIENT_COEFFICIENT = 0.2;                  
+    const float AMBIENT_COEFFICIENT = 0.25;                  
     // Amount of light determined by the Lambertian/cosine shading
     const float DIFFUSE_COEFFICIENT = 1 - AMBIENT_COEFFICIENT;
-    // Black sh
-    const float HARD_SHADOWS_COEFFICIENT = 0.3;
+    // Amount of light for hard shadows
+    const float HARD_SHADOWS_COEFFICIENT = 0.2;
+    const int RAY_DEPTH = 5;
 
+    const bool FLAG_HARD_SHADOWS = true;
+    const bool FLAG_LAMBERTIAN_SHADING = true;
 };
 
 #endif /* SCENE_H */
