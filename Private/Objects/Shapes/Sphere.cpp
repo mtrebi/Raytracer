@@ -44,7 +44,8 @@ bool Sphere::intersect(IntersectionInfo &outInfo, const Ray& ray) const {
         outInfo.hit = true;
         outInfo.hitDistance = sqrtf(a)*t;
         outInfo.hitPoint = ray.getOrigin() + t*ray.getDirection();
-        outInfo.hitNormal = (outInfo.hitPoint - m_location) / m_radius;
+        Vec3 normal = outInfo.hitPoint - m_location; normal.normalize();
+        outInfo.hitNormal = normal;
         outInfo.hitShape = const_cast<Sphere* const>(this);
     }
     else{
