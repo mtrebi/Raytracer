@@ -41,14 +41,14 @@ public:
     virtual ~Scene();  
 private:
     const IntersectionInfo visibilityTrace(const Ray& ray) const;
-    const float lightTrace (const Ray& ray) const;
+    const float shadowTrace (const Ray& ray) const;
 private:
     //TODO built-in
     Camera * m_camera;
     Light * m_light;
     std::vector<Shape*> m_shapes;
 
-    const RGBColour BACKGROUND_COLOR = RGBColour(255,255,255);
+    const RGBColour BACKGROUND_COLOR = RGBColour(0,0,0);
 };
 
 #endif /* SCENE_H */
