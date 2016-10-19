@@ -53,9 +53,9 @@ public:
     
     void normalize() {
         const float length = this->length();
-        m_x = m_x / length;
-        m_y = m_y / length;
-        m_z = m_z / length;
+        m_x /= length;
+        m_y /= length;
+        m_z /= length;
     }
     
     virtual ~Vec3();
