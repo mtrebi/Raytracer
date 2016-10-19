@@ -60,8 +60,9 @@ private:
     const float HARD_SHADOWS_COEFFICIENT = 0.2;
     const int RAY_DEPTH = 5;
 
-    const bool FLAG_HARD_SHADOWS = true;
-    const bool FLAG_LAMBERTIAN_SHADING = true;
+    const bool FLAG_HARD_SHADOWS = false;
+    const bool FLAG_LAMBERTIAN_SHADING = false;
+    //TODO PHONG SHADING
 };
 
 #endif /* SCENE_H */

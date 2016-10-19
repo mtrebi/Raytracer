@@ -68,6 +68,30 @@ void full_2drender_test(const std::string inputFile, const std::string outputFil
 void full_2drender_test2(const std::string outputFile){
     std::cout << "Main: Generating scene..." ;
     Scene* scene = new Scene();
+    // Rear cover
+    //scene->addShape(new Plane(Vec3(0,0,-30), RGBColour(100,100,100), Vec3(0,0,1), 10));
+    // Roof
+    scene->addShape(new Plane(Vec3(0,-1,-30), RGBColour(200,200,200), Vec3(0,.1,0.1), 1));
+
+
+    /*
+    scene->addShape(new Sphere(Vec3(3,3,-9), RGBColour(50,50,50), 0.1));
+    scene->addShape(new Sphere(Vec3(-3,3,-9), RGBColour(100,100,100), 0.1));
+    scene->addShape(new Sphere(Vec3(3,-3,-9), RGBColour(125,125,125), 0.1));
+    scene->addShape(new Sphere(Vec3(-3,-3,-9), RGBColour(225,225,225), 0.1));
+*/
+    
+    //scene->addShape(new Sphere(Vec3(0,0,-10), RGBColour(50,50,50), 6));
+
+    //scene->addShape(new Sphere(Vec3(0,0,-5), RGBColour(255,0,0), 0.5)); 
+
+    // floor
+    //scene->addShape(new Plane(Vec3(0,0,-10), RGBColour(255,0,0), Vec3(0,1,0), 2))
+    // left wall
+            
+    // right wall
+    
+    /*
     scene->addShape(new Sphere(Vec3(3,0,-5), RGBColour(255,0,0), 2));
     scene->addShape(new Sphere(Vec3(-3,0,-5), RGBColour(0,0,255), 1.5));
     scene->addShape(new Sphere(Vec3(-2,-2,-7), RGBColour(0,255,0), 1));
@@ -77,8 +101,8 @@ void full_2drender_test2(const std::string outputFile){
     scene->addShape(new Sphere(Vec3(1,104,-1), RGBColour(0,0,0), 100));
 
     //scene->addShape(new Plane(Vec3(0,0,0), RGBColour(0, 0, 0), Vec3(0, 1, 0), 2));
-
-    scene->addCamera(new Camera(Vec3(0,0,1), 90));
+*/
+    scene->addCamera(new Camera(Vec3(0,0,1), 45));
     scene->addLight(new Light(Vec3(5,-10,0), 10));
     std::cout << "Completed" << std::endl;
 
