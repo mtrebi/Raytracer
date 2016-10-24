@@ -20,13 +20,18 @@
 #include <vector>
 #include "MultiTracer.h"
 #include <string>
+#include "Camera.h"
+
+class Camera;
+
 class World {
-private:
+public:
     std::vector<RGBColor> m_pixels;
     std::vector<GeometryObject*> m_objects;
     ViewPlane m_vp;
-    Tracer * m_tracer;
-public:
+    Tracer * m_tracer_ptr;
+    Camera * m_camera_ptr;
+
     const RGBColor BACKGROUND_COLOR = RGBColor(0,0,0);
 
 public:

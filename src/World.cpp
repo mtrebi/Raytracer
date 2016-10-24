@@ -14,7 +14,7 @@
 #include "Plane.h"
 #include "Regular.h"
 #include <fstream>
-
+#include "Orthographic.h"
 World::World(){
     m_vp = ViewPlane(200, 200, 1.0, 1.0);
     m_objects = std::vector<GeometryObject*>(0);
@@ -22,7 +22,7 @@ World::World(){
 }
 
 World::~World(){
-    delete m_tracer;
+    delete m_tracer_ptr;
 }
 
 void World::add_object(GeometryObject* obj){
@@ -30,7 +30,8 @@ void World::add_object(GeometryObject* obj){
 }
 
 void World::build(){
-    m_tracer = new MultiTracer(this);
+    m_camera_ptr = new Orthographic(Point3D(0,0,0), Point3D(0,0,1));
+    m_tracer_ptr = new MultiTracer(this);
     m_vp.set_sampler(new Regular(25, 1));
     
     Sphere* red_sphere = new Sphere(Point3D(0,0,0), 85);
@@ -48,28 +49,10 @@ void World::build(){
 }
 
 void World::render_scene() {
-    Ray ray;
-    
-    ray.d = Vector3D(0, 0, -1);
-    
-    for (int x = 0; x < m_vp.width; ++x){
-        for (int y = 0; y < m_vp.height; ++y){
-            RGBColor pixel_color;
-            for (int s = 0; s < m_vp.get_n_samples(); ++s){
-                const Point2D sample = m_vp.sampler_ptr->next_sample();
-                
-                const double world_x = m_vp.pixel_size * (x - 0.5 * (m_vp.width + sample.x));
-                const double world_y = m_vp.pixel_size * (y - 0.5 * (m_vp.height + sample.y));
-
-                ray.o = Point3D(world_x, world_y, 100);
-                pixel_color += m_tracer->trace_ray(ray);
-            }
-            pixel_color /= m_vp.get_n_samples();
-            display_pixel(x, y, pixel_color);
-        }
+    if (m_camera_ptr != nullptr){
+        m_camera_ptr->render_scene(this);
     }
 }
-#include <iostream>
 
 const ShadeRec World::hit_bare_bones_obj(const Ray& ray) const {
     ShadeRec sr_min, sr;
