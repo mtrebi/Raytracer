@@ -10,12 +10,13 @@ Camera::Camera(){
     
 }
 
-Camera::Camera(const Point3D& eye, const Point3D& lookat, const Vector3D& up, float distance)
-    : m_eye(eye), m_lookat(lookat), m_u(up), m_distance_view_plane(distance){
+Camera::Camera(const Point3D& eye, const Point3D& lookat, float distance)
+    : m_eye(eye), m_lookat(lookat), m_distance_view_plane(distance){
 
+    m_up = Vector3D(0,1,0);
     m_w = (eye - lookat);
     m_w.normalize();
-    m_u = up ^ m_w;
+    m_u = m_up ^ m_w;
     m_u.normalize();
     m_v = m_w ^ m_u;
 }

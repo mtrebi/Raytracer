@@ -12,7 +12,7 @@ Orthographic::Orthographic()
 }
 
 Orthographic::Orthographic(const Point3D& eye, const Point3D& lookat)
-    : Camera(eye, lookat, Vector3D(), 0){
+    : Camera(eye, lookat, 0){
     
 }
 
