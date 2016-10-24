@@ -33,11 +33,11 @@ void World::add_object(GeometryObject* obj){
 
 void World::build(){
     //m_camera_ptr = new Orthographic(Point3D(0,0,0), Point3D(0,0,1));
-    m_camera_ptr = new Perspective(Point3D(0,0,-10), Point3D(0,0,1), Vector3D(0,1,0), 10);
+    m_camera_ptr = new Perspective(Point3D(0,0,-100), Point3D(0,0,0), 100);
     m_tracer_ptr = new MultiTracer(this);
-    m_vp.set_sampler(new Regular(25, 1));
+    m_vp.set_sampler(new Regular(1, 1));
     
-    Sphere* red_sphere = new Sphere(Point3D(0,0,0), 85);
+    Sphere* red_sphere = new Sphere(Point3D(0,0,0), 65);
     red_sphere->setColor(RGBColor(1,0,0));
     add_object(red_sphere);
     /*
