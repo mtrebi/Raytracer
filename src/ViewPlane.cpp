@@ -10,10 +10,9 @@ ViewPlane::ViewPlane(){
     
 }
 
-ViewPlane::ViewPlane(const int width, const int height, float pixel_size, const float gamma){
+ViewPlane::ViewPlane(const int width, const int height, const float gamma){
     this->width = width;
     this->height = height;
-    this->pixel_size = pixel_size;
     this->gamma = gamma;
     this->inv_gamma = 1 / gamma;
     

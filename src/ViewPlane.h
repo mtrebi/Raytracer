@@ -19,14 +19,13 @@
 class ViewPlane {
 public:
     ViewPlane();
-    ViewPlane(const int width, const int height, float pixel_size, const float gamma);
+    ViewPlane(const int width, const int height, const float gamma);
     ~ViewPlane();
 
     void set_sampler(Sampler * sampler);
     const int get_n_samples() const;
 public:
     int height, width;
-    float pixel_size;
     float gamma, inv_gamma;
     Sampler * sampler_ptr;
 

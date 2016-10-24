@@ -15,8 +15,10 @@
 #include "Regular.h"
 #include <fstream>
 #include "Orthographic.h"
+#include "Perspective.h"
+
 World::World(){
-    m_vp = ViewPlane(200, 200, 1.0, 1.0);
+    m_vp = ViewPlane(200, 200, 1.0);
     m_objects = std::vector<GeometryObject*>(0);
     m_pixels = std::vector<RGBColor>(m_vp.width * m_vp.height);
 }
@@ -30,7 +32,8 @@ void World::add_object(GeometryObject* obj){
 }
 
 void World::build(){
-    m_camera_ptr = new Orthographic(Point3D(0,0,0), Point3D(0,0,1));
+    //m_camera_ptr = new Orthographic(Point3D(0,0,0), Point3D(0,0,1));
+    m_camera_ptr = new Perspective(Point3D(0,0,-10), Point3D(0,0,1), Vector3D(0,1,0), 10);
     m_tracer_ptr = new MultiTracer(this);
     m_vp.set_sampler(new Regular(25, 1));
     
