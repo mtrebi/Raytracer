@@ -19,7 +19,7 @@
 class Orthographic: public Camera{
     public:
         Orthographic();
-        Orthographic(const Point3D eye, const Point3D lookat);
+        Orthographic(const Point3D& eye, const Point3D& lookat);
         ~Orthographic();
         
         virtual Vector3D calculate_ray_dir(const Point2D& p) override;
