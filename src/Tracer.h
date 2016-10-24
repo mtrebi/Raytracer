@@ -22,7 +22,7 @@ public:
     Tracer();
     Tracer(World * world_ptr);
 
-    virtual const RGBColor trace_ray(const Ray& ray) const = 0;
+    virtual const RGBColor trace_ray(const Ray& ray, const int depth = 0) const = 0;
 
 protected:
     World* m_world_ptr;

@@ -21,7 +21,7 @@ public:
     MultiTracer();
     MultiTracer(World* world_ptr);
 
-    virtual const RGBColor trace_ray(const Ray& ray) const override;
+    virtual const RGBColor trace_ray(const Ray& ray, const int depth = 0) const override;
 };
 
 
