@@ -26,13 +26,9 @@ Vector3D Orthographic::calculate_ray_dir(const Point2D& p){
     return ray_dir;
 }
 
-Point3D Orthographic::calculate_ray_origin(const Point2D& p){
-    return Point3D(p.x, p.y, -100);
-};
-
-
 void Orthographic::render_scene(World * world){
     Ray ray;
+
 
     for (int x = 0; x < world->m_vp.width; ++x){
         for (int y = 0; y < world->m_vp.height; ++y){
@@ -43,7 +39,7 @@ void Orthographic::render_scene(World * world){
                 pixel.x = (x - 0.5 * (world->m_vp.width + sample.x));
                 pixel.y = (y - 0.5 * (world->m_vp.height + sample.y));
 
-                ray.o = calculate_ray_origin(pixel);
+                ray.o = Point3D(pixel.x, pixel.y, -100);
                 ray.d = calculate_ray_dir(pixel);
                 
                 pixel_color += world->m_tracer_ptr->trace_ray(ray);
