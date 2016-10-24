@@ -40,8 +40,8 @@ void Orthographic::render_scene(World * world){
             for (int s = 0; s < world->m_vp.get_n_samples(); ++s){
                 const Point2D sample = world->m_vp.sampler_ptr->next_sample();
                 Point2D pixel;
-                pixel.x = world->m_vp.pixel_size * (x - 0.5 * (world->m_vp.width + sample.x));
-                pixel.y = world->m_vp.pixel_size * (y - 0.5 * (world->m_vp.height + sample.y));
+                pixel.x = (x - 0.5 * (world->m_vp.width + sample.x));
+                pixel.y = (y - 0.5 * (world->m_vp.height + sample.y));
 
                 ray.o = calculate_ray_origin(pixel);
                 ray.d = calculate_ray_dir(pixel);
