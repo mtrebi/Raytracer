@@ -26,7 +26,7 @@ protected:
     
 public:
     Camera();
-    Camera(const Point3D& eye, const Point3D& lookat, float distance);
+    Camera(const Point3D& eye, const Point3D& lookat, const float distance);
     ~Camera();
     
     virtual Vector3D calculate_ray_dir(const Point2D& p) = 0;
