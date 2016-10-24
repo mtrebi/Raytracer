@@ -12,10 +12,11 @@
 #include "Ray.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Regular.h"
 #include <fstream>
 
 World::World(){
-    m_vp = ViewPlane(640, 480, 1.0, 1.0);
+    m_vp = ViewPlane(200, 200, 1.0, 1.0);
     m_objects = std::vector<GeometryObject*>(0);
     m_pixels = std::vector<RGBColor>(m_vp.width * m_vp.height);
 }
@@ -30,11 +31,12 @@ void World::add_object(GeometryObject* obj){
 
 void World::build(){
     m_tracer = new MultiTracer(this);
-
-    Sphere* red_sphere = new Sphere(Point3D(0,-25,0), 85);
+    m_vp.set_sampler(new Regular(25, 1));
+    
+    Sphere* red_sphere = new Sphere(Point3D(0,0,0), 85);
     red_sphere->setColor(RGBColor(1,0,0));
     add_object(red_sphere);
-
+    /*
     Sphere* yellow_sphere = new Sphere(Point3D(0,30,0), 60);
     yellow_sphere->setColor(RGBColor(1,1,0));
     add_object(yellow_sphere);
@@ -42,22 +44,27 @@ void World::build(){
     Plane* green_plane = new Plane(Point3D(0,0,0), Normal(0,1,1));
     green_plane->setColor(RGBColor(0,1,0));
     add_object(green_plane);
-
+    */
 }
 
 void World::render_scene() {
-    RGBColor pixel_color;
     Ray ray;
     
     ray.d = Vector3D(0, 0, -1);
     
     for (int x = 0; x < m_vp.width; ++x){
         for (int y = 0; y < m_vp.height; ++y){
-            const double world_x = m_vp.pixel_size * (x - 0.5 * (m_vp.width - 1));
-            const double world_y = m_vp.pixel_size * (y - 0.5 * (m_vp.height - 1));
-        
-            ray.o = Point3D(world_x, world_y, 100);
-            pixel_color = m_tracer->trace_ray(ray);
+            RGBColor pixel_color;
+            for (int s = 0; s < m_vp.get_n_samples(); ++s){
+                const Point2D sample = m_vp.sampler_ptr->next_sample();
+                
+                const double world_x = m_vp.pixel_size * (x - 0.5 * (m_vp.width + sample.x));
+                const double world_y = m_vp.pixel_size * (y - 0.5 * (m_vp.height + sample.y));
+
+                ray.o = Point3D(world_x, world_y, 100);
+                pixel_color += m_tracer->trace_ray(ray);
+            }
+            pixel_color /= m_vp.get_n_samples();
             display_pixel(x, y, pixel_color);
         }
     }
