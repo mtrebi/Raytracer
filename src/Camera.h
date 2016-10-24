@@ -30,8 +30,6 @@ public:
     ~Camera();
     
     virtual Vector3D calculate_ray_dir(const Point2D& p) = 0;
-    virtual Point3D calculate_ray_origin(const Point2D& p) = 0;
-
     virtual void render_scene(World *world) = 0;
 private:
 };

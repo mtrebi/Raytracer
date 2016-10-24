@@ -23,8 +23,6 @@ class Orthographic: public Camera{
         ~Orthographic();
         
         virtual Vector3D calculate_ray_dir(const Point2D& p) override;
-        virtual Point3D calculate_ray_origin(const Point2D& p) override;
-
         virtual void render_scene(World *world) override;
 };
 
