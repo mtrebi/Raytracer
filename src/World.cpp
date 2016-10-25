@@ -56,8 +56,9 @@ void World::build(){
     red_sphere->setColor(RGBColor(0,0,1));
     add_object(blue_sphere);
     
-    //Plane* green_plane = new Plane(Point3D(0,-10,0), Normal(0,.45,0));
-    //add_object(green_plane);
+    Plane* green_plane = new Plane(Point3D(0,-50,0), Normal(0,.95,0));
+    green_plane->setColor(RGBColor(0,1,0));
+    add_object(green_plane);
 
     Light * point_light = new Point(Point3D(0, 100, 0), 1, RGBColor(.9,.9,.9));
     add_light(point_light);
