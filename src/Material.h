@@ -14,6 +14,15 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+class Material {
+public:
+    Material();
+    Material(const RGBColor& c);
+    ~Material();
+public:
+    RGBColor color;
+    float f_specular_reflection;
+};
 
 
 #endif /* MATERIAL_H */

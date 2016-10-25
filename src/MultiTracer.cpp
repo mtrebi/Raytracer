@@ -6,6 +6,7 @@
 
 #include "MultiTracer.h"
 #include "World.h"
+#include "Material.h"
 #include <math.h>   // pow()
 #include <algorithm> // fmax()
 MultiTracer::MultiTracer()
@@ -42,10 +43,11 @@ const RGBColor MultiTracer::phong_illumination(const ShadeRec& sr) const {
         const Vector3D R = 2*(L * N) * N - L;        
 
         diffuse += Kd * std::fmax(L*N,0) * Lcolor;
+        //TODO move indexs to material
         specular += Ks * pow(std::fmax(R*V,0), specular_shininess) * Lcolor;
     }
     const RGBColor ambient = Ka * m_world_ptr->m_ambient->get_color(sr);
     
-    return (ambient + diffuse + specular) * sr.color;
+    return (ambient + diffuse + specular) * sr.material_ptr->color;
 }
 

@@ -23,9 +23,8 @@ class World;
 
 struct ShadeRec {
     bool hit;
-    RGBColor color;
+    Material* material_ptr;
     Point3D hit_point;
-    Point3D local_hit_point;
     Normal hit_normal;
     Ray ray;
     //World& world;

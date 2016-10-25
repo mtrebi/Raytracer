@@ -26,10 +26,11 @@ public:
     virtual bool hit (const Ray &ray, double& tmin, ShadeRec& sr) const = 0;
 public:
     //TODO delete
-    void setColor(const RGBColor& color) { m_color = color; }
+    void setMaterial(Material* material) { m_material = material; }
 protected:
+    Material * m_material;
+
     const double kEpsilon = std::numeric_limits<double>::min();
-    RGBColor m_color;
 };
 
 
