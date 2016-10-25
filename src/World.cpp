@@ -18,9 +18,10 @@
 #include "Perspective.h"
 #include "Light.h"
 #include "Ambient.h"
+#include "Point.h"
 
 World::World(){
-    m_vp = ViewPlane(200, 200, 1.0);
+    m_vp = ViewPlane(400, 400, 1.0);
     m_objects = std::vector<GeometryObject*>(0);
     m_pixels = std::vector<RGBColor>(m_vp.width * m_vp.height);
 }
@@ -47,12 +48,19 @@ void World::build(){
     m_tracer_ptr = new MultiTracer(this);
     m_vp.set_sampler(new Regular(1, 1));
     
-    Sphere* red_sphere = new Sphere(Point3D(0,0,0), 65);
+    Sphere* red_sphere = new Sphere(Point3D(50, 0,0), 40);
     red_sphere->setColor(RGBColor(1,0,0));
     add_object(red_sphere);
     
-    //Light * point_light = new Point(Point3D(0, 200, 0), RGBColor(.9,.9,.9), 10);
-    //add_light(point_light);
+    Sphere*  blue_sphere = new Sphere(Point3D(-50,0,0), 40);
+    red_sphere->setColor(RGBColor(0,0,1));
+    add_object(blue_sphere);
+    
+    //Plane* green_plane = new Plane(Point3D(0,-10,0), Normal(0,.45,0));
+    //add_object(green_plane);
+
+    Light * point_light = new Point(Point3D(0, 100, 0), 1, RGBColor(.9,.9,.9));
+    add_light(point_light);
     
     Light * ambient_light = new Ambient(1, RGBColor(0.9,0.9,0.9));
     set_ambient(ambient_light);
@@ -155,7 +163,6 @@ void World::save_image(const std::string& outputFile) const {
             (int) (pixel.g * 255), 
             (int) (pixel.r * 255)
         };
-        std::cout << color[2] << " ";
         fwrite(color, 1, 3, file);
     }
     fclose(file);
