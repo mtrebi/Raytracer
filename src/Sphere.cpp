@@ -36,9 +36,11 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) const {
     if (t_minus > kEpsilon){
         tmin = t_minus;
         sr.hit = true;
+        sr.hit_point = ray.o + ray.d * t_minus;
         sr.local_hit_point = ray.o + ray.d * t_minus;
         sr.hit_normal = ((ray.o - m_center) + (t_minus * ray.d)) / m_radius;
         sr.color = m_color;
+        sr.ray = ray;
         return true;
     }
     
@@ -47,9 +49,11 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) const {
     if (t_plus > kEpsilon){
         tmin = t_plus;
         sr.hit = true;
+        sr.hit_point = ray.o + ray.d * t_plus;
         sr.local_hit_point = ray.o + ray.d * t_plus;
         sr.hit_normal = ((ray.o - m_center) + (t_plus * ray.d)) / m_radius;
         sr.color = m_color;
+        sr.ray = ray;
         return true;
     }
     return false;
