@@ -16,6 +16,8 @@
 #include <fstream>
 #include "Orthographic.h"
 #include "Perspective.h"
+#include "Light.h"
+#include "Ambient.h"
 
 World::World(){
     m_vp = ViewPlane(200, 200, 1.0);
@@ -27,8 +29,16 @@ World::~World(){
     delete m_tracer_ptr;
 }
 
+void World::set_ambient(Light * light){
+    m_ambient = light;
+}
+
 void World::add_object(GeometryObject* obj){
     m_objects.push_back(obj);
+}
+
+void World::add_light(Light* light){
+    m_lights.push_back(light);
 }
 
 void World::build(){
@@ -40,6 +50,12 @@ void World::build(){
     Sphere* red_sphere = new Sphere(Point3D(0,0,0), 65);
     red_sphere->setColor(RGBColor(1,0,0));
     add_object(red_sphere);
+    
+    //Light * point_light = new Point(Point3D(0, 200, 0), RGBColor(.9,.9,.9), 10);
+    //add_light(point_light);
+    
+    Light * ambient_light = new Ambient(1, RGBColor(0.9,0.9,0.9));
+    set_ambient(ambient_light);
     /*
     Sphere* yellow_sphere = new Sphere(Point3D(0,30,0), 60);
     yellow_sphere->setColor(RGBColor(1,1,0));
@@ -60,17 +76,16 @@ void World::render_scene() {
 const ShadeRec World::hit_bare_bones_obj(const Ray& ray) const {
     ShadeRec sr_min, sr;
     
-    sr.hit = false;
-    sr.color = RGBColor();
-    sr.hit_point = Point3D();
-    sr.local_hit_point = Point3D();    
-    sr.hit_normal = Normal();
-    sr.ray = ray;
+    sr_min.hit = false;
+    sr_min.color = RGBColor();
+    sr_min.hit_point = Point3D();
+    sr_min.local_hit_point = Point3D();    
+    sr_min.hit_normal = Normal();
+    sr_min.ray = ray;
     //sr.world = *this;
 
     double t, t_min = std::numeric_limits<float>::max();
     for(const auto& obj : m_objects){
-        bool hit = obj->hit(ray, t, sr);
         if (obj->hit(ray, t, sr) && (t < t_min)){
             t_min = t;
             sr_min = sr;
@@ -83,6 +98,8 @@ void World::display_pixel(const int x, const int y, const RGBColor& pixel_color)
     int new_index = (y * m_vp.width) + x;
     m_pixels[new_index] = pixel_color;
 }
+
+#include <iostream>
 
 void World::save_image(const std::string& outputFile) const {
     const int image_size = m_vp.height * m_vp.width * 4;
@@ -134,10 +151,11 @@ void World::save_image(const std::string& outputFile) const {
     for (int i = 0; i < m_pixels.size(); ++i){
         const RGBColor pixel = m_pixels[i];
         unsigned char color[3] = {
-            (int) pixel.b * 255, 
-            (int) pixel.g * 255, 
-            (int) pixel.r * 255
+            (int) (pixel.b * 255), 
+            (int) (pixel.g * 255), 
+            (int) (pixel.r * 255)
         };
+        std::cout << color[2] << " ";
         fwrite(color, 1, 3, file);
     }
     fclose(file);

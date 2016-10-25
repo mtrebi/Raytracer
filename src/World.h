@@ -21,6 +21,7 @@
 #include "MultiTracer.h"
 #include <string>
 #include "Camera.h"
+#include "Light.h"
 
 class Camera;
 
@@ -28,6 +29,8 @@ class World {
 public:
     std::vector<RGBColor> m_pixels;
     std::vector<GeometryObject*> m_objects;
+    std::vector<Light*> m_lights;
+    Light * m_ambient;
     ViewPlane m_vp;
     Tracer * m_tracer_ptr;
     Camera * m_camera_ptr;
@@ -39,7 +42,9 @@ public:
     ~World();
     
     void add_object(GeometryObject* obj);
-    
+    void add_light(Light* light);
+    void set_ambient(Light * light);
+
     void build();
     void render_scene();
     const ShadeRec hit_bare_bones_obj(const Ray& ray) const;
