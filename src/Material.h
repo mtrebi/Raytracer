@@ -19,6 +19,9 @@ public:
     Material();
     Material(const RGBColor& c);
     ~Material();
+    
+    const virtual RGBColor shade(const ShadeRec& sr) const = 0;
+
 public:
     RGBColor color;
     float f_specular_reflection;

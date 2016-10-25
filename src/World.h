@@ -47,7 +47,7 @@ public:
 
     void build();
     void render_scene();
-    const ShadeRec hit_bare_bones_obj(const Ray& ray) const;
+    const ShadeRec hit_bare_bones_obj(const Ray& ray);
 
     
     void open_window(const int hres, const int vres) const;

@@ -27,7 +27,7 @@ struct ShadeRec {
     Point3D hit_point;
     Normal hit_normal;
     Ray ray;
-    //World& world;
+    World* world_ptr;
 };
 
 #endif

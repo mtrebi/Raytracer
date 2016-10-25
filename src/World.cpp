@@ -19,7 +19,8 @@
 #include "Light.h"
 #include "Ambient.h"
 #include "Point.h"
-
+#include <algorithm>
+#include "Phong.h"
 World::World(){
     m_vp = ViewPlane(400, 400, 1.0);
     m_objects = std::vector<GeometryObject*>(0);
@@ -43,37 +44,34 @@ void World::add_light(Light* light){
 }
 
 void World::build(){
-    //m_camera_ptr = new Orthographic(Point3D(0,0,0), Point3D(0,0,1));
-    m_camera_ptr = new Perspective(Point3D(0,0,-100), Point3D(0,0,0), 100);
+    m_camera_ptr = new Perspective(Point3D(0,0,500), Point3D(-5,0,0), 850);
     m_tracer_ptr = new MultiTracer(this);
-    m_vp.set_sampler(new Regular(1, 1));
+    m_vp.set_sampler(new Regular(16, 1));
+    
+    // Lights
+    Ambient * ambient_ptr = new Ambient(1, RGBColor(.8,.8,.8));
+    set_ambient(ambient_ptr);
+
+    Light * point_ptr = new Point(Point3D(0, 100, 0), 0.3, RGBColor(.9,.9,.9));
+    add_light(point_ptr);
+    
+    Light * point_ptr2 = new Point(Point3D(100, 50, 150), 1, RGBColor(.9,.9,.9));
+    add_light(point_ptr2);
+        
+    // Objects
     
     Sphere* red_sphere = new Sphere(Point3D(50, 0,0), 40);
-    red_sphere->setColor(RGBColor(1,0,0));
+    red_sphere->setMaterial(new Phong(RGBColor(1,0,0)));
     add_object(red_sphere);
     
     Sphere*  blue_sphere = new Sphere(Point3D(-50,0,0), 40);
-    red_sphere->setColor(RGBColor(0,0,1));
+    blue_sphere->setMaterial(new Phong(RGBColor(0,0,1)));
     add_object(blue_sphere);
     
-    Plane* green_plane = new Plane(Point3D(0,-50,0), Normal(0,.95,0));
-    green_plane->setColor(RGBColor(0,1,0));
-    add_object(green_plane);
-
-    Light * point_light = new Point(Point3D(0, 100, 0), 1, RGBColor(.9,.9,.9));
-    add_light(point_light);
     
-    Light * ambient_light = new Ambient(1, RGBColor(0.9,0.9,0.9));
-    set_ambient(ambient_light);
-    /*
-    Sphere* yellow_sphere = new Sphere(Point3D(0,30,0), 60);
-    yellow_sphere->setColor(RGBColor(1,1,0));
-    add_object(yellow_sphere);
-
-    Plane* green_plane = new Plane(Point3D(0,0,0), Normal(0,1,1));
-    green_plane->setColor(RGBColor(0,1,0));
+    Plane* green_plane = new Plane(Point3D(0,-50,0), Normal(0,.95,0));
+    green_plane->setMaterial(new Phong(RGBColor(0,1,0)));
     add_object(green_plane);
-    */
 }
 
 void World::render_scene() {
@@ -82,16 +80,15 @@ void World::render_scene() {
     }
 }
 
-const ShadeRec World::hit_bare_bones_obj(const Ray& ray) const {
+const ShadeRec World::hit_bare_bones_obj(const Ray& ray) {
     ShadeRec sr_min, sr;
     
     sr_min.hit = false;
-    sr_min.color = RGBColor();
+    sr_min.material_ptr = nullptr;
     sr_min.hit_point = Point3D();
-    sr_min.local_hit_point = Point3D();    
     sr_min.hit_normal = Normal();
     sr_min.ray = ray;
-    //sr.world = *this;
+    sr.world_ptr = this;
 
     double t, t_min = std::numeric_limits<float>::max();
     for(const auto& obj : m_objects){
@@ -104,8 +101,13 @@ const ShadeRec World::hit_bare_bones_obj(const Ray& ray) const {
 }
 
 void World::display_pixel(const int x, const int y, const RGBColor& pixel_color) {
+    RGBColor tempColor;
     int new_index = (y * m_vp.width) + x;
-    m_pixels[new_index] = pixel_color;
+    tempColor.r = std::fmin(pixel_color.r, 1);
+    tempColor.g = std::fmin(pixel_color.g, 1);
+    tempColor.b = std::fmin(pixel_color.b, 1);
+
+    m_pixels[new_index] = tempColor;
 }
 
 #include <iostream>
