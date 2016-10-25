@@ -22,10 +22,11 @@ bool Plane::hit (const Ray &ray, double& tmin, ShadeRec& sr) const {
     const double t = (m_point - ray.o) * m_normal / (ray.d * m_normal);
     if (t > kEpsilon){
         tmin = t;
-        //sr.hit =  true;
+        sr.hit =  true;
         sr.hit_normal = m_normal;
+        sr.hit_point = ray.o + t * ray.d;
         sr.local_hit_point = ray.o + t * ray.d;
-       // sr.color = m_color;
+        sr.color = m_color;
         sr.ray = ray;
         return true;
     }else {
