@@ -75,7 +75,7 @@ void World::build_cornel_box(){
     Ambient * ambient_ptr = new Ambient(1, RGBColor(.3,.3,.3));
     set_ambient(ambient_ptr);
     
-    Light * point_ptr = new Point(Point3D(0, 55, 75), 1, Colors::white);
+    Light * point_ptr = new Point(Point3D(0, 55, 75), 1, Colors::red);
     add_light(point_ptr);
     
     // Build objects
