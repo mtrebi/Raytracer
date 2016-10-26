@@ -1,25 +1,32 @@
-#ifndef __CONSTANTS__
-#define __CONSTANTS__
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/* 
+ * File:   Constants.h
+ * Author: maru
+ *
+ * Created on October 26, 2016, 9:37 AM
+ */
+
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+# include "RGBColor.h"
+
+namespace Colors {
+    const RGBColor black = RGBColor(0,0,0);
+    const RGBColor red = RGBColor(1,0,0);
+    const RGBColor green = RGBColor(0,1,0);
+    const RGBColor blue = RGBColor(0,0,1);
+    const RGBColor yellow = RGBColor(1,1,0);
+    const RGBColor cyan = RGBColor(0,1,1);
+    const RGBColor magenta = RGBColor(1,0,1);
+    const RGBColor white = RGBColor(1,1,1);
+}
 
 
-// 	Copyright (C) Kevin Suffern 2000-2007.
-//	This C++ code is for non-commercial purposes only.
-//	This C++ code is licensed under the GNU General Public License Version 2.
-//	See the file COPYING.txt for the full license.
+#endif /* CONSTANTS_H */
 
-
-#include <stdlib.h>			// for RAND_MAX
-#include "RGBColor.h"
-
-const double 	PI 			= 3.1415926535897932384;
-const double 	TWO_PI 		= 6.2831853071795864769;
-const double 	PI_ON_180 	= 0.0174532925199432957;
-const double 	invPI 		= 0.3183098861837906715;
-const double 	invTWO_PI 	= 0.1591549430918953358;
-
-const double 	kEpsilon 	= 0.0001; 
-const double	kHugeValue	= 1.0E10;
-
-const float 	invRAND_MAX = 1.0 / (float)RAND_MAX;
-
-#endif
