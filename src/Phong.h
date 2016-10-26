@@ -28,7 +28,7 @@ private:
     const float Ka = 0.2;
     const float Kd = 0.4;
     const float Ks = 0.4;
-    const int specular_shininess = 20;
+    const int specular_shininess = 100;
 };
 
 
