@@ -20,6 +20,11 @@ Point::~Point(){
     
 }
 
+const float Point::get_distance(const Point3D& point) const{
+    return m_position.distance(point);
+}
+
+
 const Vector3D Point::get_direction(const Point3D& surface_point) const {
      return (m_position - surface_point).hat();
 }

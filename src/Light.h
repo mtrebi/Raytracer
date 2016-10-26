@@ -24,6 +24,7 @@ public:
     Light(const float intensity, const RGBColor& color);
     
     virtual ~Light();
+    virtual const float get_distance(const Point3D& point) const = 0;
     virtual const Vector3D get_direction(const Point3D& surface_point) const = 0;
     virtual const RGBColor get_color(const ShadeRec& sr) const = 0;
 protected:
