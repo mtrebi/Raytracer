@@ -10,7 +10,7 @@
 
 int main(int argc, char** argv) {
     World world = World();
-    world.build();
+    world.build_cornel_box();
     world.render_scene();
     world.save_image("output.bmp");
     

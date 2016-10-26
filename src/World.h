@@ -45,7 +45,7 @@ public:
     void add_light(Light* light);
     void set_ambient(Light * light);
 
-    void build();
+    void build_cornel_box();
     void render_scene();
     const ShadeRec hit_bare_bones_obj(const Ray& ray);
 

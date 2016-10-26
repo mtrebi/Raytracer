@@ -21,8 +21,10 @@
 #include "Point.h"
 #include <algorithm>
 #include "Phong.h"
+#include "Constants.h"
+
 World::World(){
-    m_vp = ViewPlane(400, 400, 1.0);
+    m_vp = ViewPlane(640, 480, 1.0);
     m_objects = std::vector<GeometryObject*>(0);
     m_pixels = std::vector<RGBColor>(m_vp.width * m_vp.height);
 }
@@ -43,35 +45,45 @@ void World::add_light(Light* light){
     m_lights.push_back(light);
 }
 
-void World::build(){
+void World::build_cornel_box(){
     m_camera_ptr = new Perspective(Point3D(0,0,500), Point3D(-5,0,0), 850);
     m_tracer_ptr = new MultiTracer(this);
     m_vp.set_sampler(new Regular(16, 1));
+        
+    // Build walls
+    Plane* floor = new Plane(Point3D(0,-100,0), Normal(0,1,0));
+    floor->setMaterial(new Phong(Colors::white));
+    add_object(floor);
     
-    // Lights
-    Ambient * ambient_ptr = new Ambient(1, RGBColor(.8,.8,.8));
+    Plane* ceil = new Plane(Point3D(0,100,0), Normal(0,-1,0));
+    ceil->setMaterial(new Phong(Colors::white));
+    add_object(ceil);
+    
+    Plane* left_wall = new Plane(Point3D(-100,0,0), Normal(1,0,0));
+    left_wall->setMaterial(new Phong(Colors::red));
+    add_object(left_wall);
+    
+    Plane* right_wall = new Plane(Point3D(100,0,0), Normal(-1,0,0));
+    right_wall->setMaterial(new Phong(Colors::green));
+    add_object(right_wall);
+    
+    Plane* back_wall = new Plane(Point3D(0,0,-100), Normal(0,0,1));
+    back_wall->setMaterial(new Phong(Colors::white));
+    add_object(back_wall);
+    
+    // Build lights
+    Ambient * ambient_ptr = new Ambient(1, RGBColor(.3,.3,.3));
     set_ambient(ambient_ptr);
-
-    Light * point_ptr = new Point(Point3D(0, 100, 0), 0.3, RGBColor(.9,.9,.9));
+    
+    Light * point_ptr = new Point(Point3D(0, 55, 75), 1, Colors::white);
     add_light(point_ptr);
     
-    Light * point_ptr2 = new Point(Point3D(100, 50, 150), 1, RGBColor(.9,.9,.9));
-    add_light(point_ptr2);
-        
-    // Objects
-    
-    Sphere* red_sphere = new Sphere(Point3D(50, 0,0), 40);
-    red_sphere->setMaterial(new Phong(RGBColor(1,0,0)));
-    add_object(red_sphere);
-    
-    Sphere*  blue_sphere = new Sphere(Point3D(-50,0,0), 40);
-    blue_sphere->setMaterial(new Phong(RGBColor(0,0,1)));
-    add_object(blue_sphere);
+    // Build objects
+    Sphere* sphere = new Sphere(Point3D(50, 0,0), 40);
+    sphere->setMaterial(new Phong(Colors::white));
+    add_object(sphere);
     
     
-    Plane* green_plane = new Plane(Point3D(0,-50,0), Normal(0,.95,0));
-    green_plane->setMaterial(new Phong(RGBColor(0,1,0)));
-    add_object(green_plane);
 }
 
 void World::render_scene() {
