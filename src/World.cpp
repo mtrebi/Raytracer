@@ -96,7 +96,7 @@ void World::build_cornel_box(){
     metal_sphere->setMaterial(new Metal(Colors::blue));
     add_object(metal_sphere);
     
-    Sphere* mirror_sphere = new Sphere(Point3D(-20, -60, 0), 25);
+    Sphere* mirror_sphere = new Sphere(Point3D(-60, 70, 0), 20);
     mirror_sphere->setMaterial(new Mirror());
     add_object(mirror_sphere);
 }
