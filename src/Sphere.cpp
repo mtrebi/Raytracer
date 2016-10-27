@@ -44,7 +44,7 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) {
         return true;
     }
     
-    const double t_plus = (b + sq_disc) / denom;
+    const double t_plus = (-b + sq_disc) / denom;
 
     if (t_plus > kEpsilon){
         tmin = t_plus;
