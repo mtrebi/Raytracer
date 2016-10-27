@@ -24,7 +24,7 @@ public:
     Plane(const Point3D& p, const Normal& n);
     ~Plane();
 
-    bool hit (const Ray &ray, double& tmin, ShadeRec& sr) const;
+    bool hit (const Ray &ray, double& tmin, ShadeRec& sr);
 private:
     Point3D m_point;
     Normal m_normal;

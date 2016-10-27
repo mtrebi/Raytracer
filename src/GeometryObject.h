@@ -23,7 +23,7 @@ public:
     GeometryObject();
     ~GeometryObject();
             
-    virtual bool hit (const Ray &ray, double& tmin, ShadeRec& sr) const = 0;
+    virtual bool hit (const Ray &ray, double& tmin, ShadeRec& sr) = 0;
 public:
     //TODO delete
     void setMaterial(Material* material) { m_material = material; }

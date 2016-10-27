@@ -18,7 +18,7 @@ Sphere::Sphere(const Point3D& center, const float radius)
 Sphere::~Sphere(){
 }
 
-bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) const {
+bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) {
     const double a = ray.d * ray.d;
     const double b = 2 * (ray.o - m_center) * ray.d;
     const double c = (ray.o - m_center) * (ray.o - m_center) - (m_radius * m_radius);
@@ -40,6 +40,7 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) const {
         sr.hit_normal = ((ray.o - m_center) + (t_minus * ray.d)) / m_radius;
         sr.material_ptr = m_material;
         sr.ray = ray;
+        sr.obj_ptr = this;
         return true;
     }
     
@@ -52,6 +53,7 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) const {
         sr.hit_normal = ((ray.o - m_center) + (t_plus * ray.d)) / m_radius;
         sr.material_ptr = m_material;
         sr.ray = ray;
+        sr.obj_ptr = this;
         return true;
     }
     return false;
