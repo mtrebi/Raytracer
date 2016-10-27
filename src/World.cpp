@@ -25,6 +25,7 @@
 #include "Plastic.h"
 #include "Chalk.h"
 #include "Metal.h"
+#include "Mirror.h"
 
 World::World(){
     m_vp = ViewPlane(640, 480, 1.0);
@@ -75,6 +76,10 @@ void World::build_cornel_box(){
     back_wall->setMaterial(new Chalk(Colors::white));
     add_object(back_wall);
     
+    Plane* front_wall = new Plane(Point3D(0,0,500), Normal(0,0,1));
+    front_wall->setMaterial(new Chalk(Colors::black));
+    add_object(front_wall);
+    
     // Build lights
     Ambient * ambient_ptr = new Ambient(1, RGBColor(.3,.3,.3));
     set_ambient(ambient_ptr);
@@ -87,9 +92,13 @@ void World::build_cornel_box(){
     plastic_sphere->setMaterial(new Plastic(Colors::white));
     add_object(plastic_sphere);
     
-    Sphere* metal_sphere = new Sphere(Point3D(-50, 0, 60), 40);
+    Sphere* metal_sphere = new Sphere(Point3D(-50, 0, 60), 30);
     metal_sphere->setMaterial(new Metal(Colors::blue));
     add_object(metal_sphere);
+    
+    Sphere* mirror_sphere = new Sphere(Point3D(-20, -60, 0), 25);
+    mirror_sphere->setMaterial(new Mirror());
+    add_object(mirror_sphere);
 }
 
 void World::render_scene() {
