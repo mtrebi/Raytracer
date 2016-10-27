@@ -47,7 +47,7 @@ public:
 
     void build_cornel_box();
     void render_scene();
-    const ShadeRec hit_bare_bones_obj(const Ray& ray);
+    const ShadeRec hit_bare_bones_obj(const Ray& ray, const std::vector<GeometryObject*> ignore = std::vector<GeometryObject*>());
 
     
     void open_window(const int hres, const int vres) const;

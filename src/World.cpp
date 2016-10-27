@@ -48,9 +48,10 @@ void World::add_light(Light* light){
 void World::build_cornel_box(){
     m_camera_ptr = new Perspective(Point3D(0,0,500), Point3D(-5,0,0), 850);
     m_tracer_ptr = new MultiTracer(this);
-    m_vp.set_sampler(new Regular(16, 1));
+    m_vp.set_sampler(new Regular(1, 1));
         
     // Build walls
+    
     Plane* floor = new Plane(Point3D(0,-100,0), Normal(0,1,0));
     floor->setMaterial(new Phong(Colors::white));
     add_object(floor);
@@ -92,7 +93,7 @@ void World::render_scene() {
     }
 }
 
-const ShadeRec World::hit_bare_bones_obj(const Ray& ray) {
+const ShadeRec World::hit_bare_bones_obj(const Ray& ray, const std::vector<GeometryObject*> ignore){
     ShadeRec sr_min, sr;
     
     sr_min.hit = false;
@@ -104,9 +105,12 @@ const ShadeRec World::hit_bare_bones_obj(const Ray& ray) {
 
     double t, t_min = std::numeric_limits<float>::max();
     for(const auto& obj : m_objects){
-        if (obj->hit(ray, t, sr) && (t < t_min)){
-            t_min = t;
-            sr_min = sr;
+        if (std::find(ignore.begin(), ignore.end(), obj) == ignore.end()){
+            
+            if (obj->hit(ray, t, sr) && t > 0 && (t < t_min)){
+                t_min = t;
+                sr_min = sr;
+            }
         }
     }
     return sr_min;
@@ -121,8 +125,6 @@ void World::display_pixel(const int x, const int y, const RGBColor& pixel_color)
 
     m_pixels[new_index] = tempColor;
 }
-
-#include <iostream>
 
 void World::save_image(const std::string& outputFile) const {
     const int image_size = m_vp.height * m_vp.width * 4;
