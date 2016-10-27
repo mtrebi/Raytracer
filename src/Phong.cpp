@@ -13,8 +13,8 @@ Phong::Phong()
     
 }
 
-Phong::Phong(const RGBColor& c)
-        : Material(c){
+Phong::Phong(const RGBColor& c, const float kd, const float ks, const float sp_e, const float lci)
+        : Material(c), Kd(kd), Ks(ks), specular_e(sp_e), light_color_inf(lci){
     
 }
 
@@ -31,8 +31,8 @@ const RGBColor Phong::shade(const ShadeRec& sr) const {
         const Vector3D L = light->get_direction(sr.hit_point);
         const Vector3D R = 2*(L * N) * N - L;        
 
-        diffuse += Kd * std::fmax(L*N,0) * (Lcolor + sr.material_ptr->color);
-        specular += Ks * pow(std::fmax(R*V,0), specular_shininess) * (Lcolor + sr.material_ptr->color);
+        diffuse += Kd * std::fmax(L*N,0) * (light_color_inf * Lcolor +  (1 - light_color_inf) * sr.material_ptr->color);
+        specular += Ks * pow(std::fmax(R*V,0), specular_e) * (light_color_inf * Lcolor +  (1 - light_color_inf) * sr.material_ptr->color);
     }
     const RGBColor ambient = Ka * sr.world_ptr->m_ambient->get_color(sr);
     

@@ -22,6 +22,9 @@
 #include <algorithm>
 #include "Phong.h"
 #include "Constants.h"
+#include "Plastic.h"
+#include "Chalk.h"
+#include "Metal.h"
 
 World::World(){
     m_vp = ViewPlane(640, 480, 1.0);
@@ -53,23 +56,23 @@ void World::build_cornel_box(){
     // Build walls
     
     Plane* floor = new Plane(Point3D(0,-100,0), Normal(0,1,0));
-    floor->setMaterial(new Phong(Colors::white));
+    floor->setMaterial(new Chalk(Colors::white));
     add_object(floor);
     
     Plane* ceil = new Plane(Point3D(0,100,0), Normal(0,-1,0));
-    ceil->setMaterial(new Phong(Colors::white));
+    ceil->setMaterial(new Chalk(Colors::white));
     add_object(ceil);
     
     Plane* left_wall = new Plane(Point3D(-100,0,0), Normal(1,0,0));
-    left_wall->setMaterial(new Phong(Colors::red));
+    left_wall->setMaterial(new Chalk(Colors::red));
     add_object(left_wall);
     
     Plane* right_wall = new Plane(Point3D(100,0,0), Normal(-1,0,0));
-    right_wall->setMaterial(new Phong(Colors::green));
+    right_wall->setMaterial(new Chalk(Colors::green));
     add_object(right_wall);
     
     Plane* back_wall = new Plane(Point3D(0,0,-100), Normal(0,0,1));
-    back_wall->setMaterial(new Phong(Colors::white));
+    back_wall->setMaterial(new Chalk(Colors::white));
     add_object(back_wall);
     
     // Build lights
@@ -80,11 +83,13 @@ void World::build_cornel_box(){
     add_light(point_ptr);
     
     // Build objects
-    Sphere* sphere = new Sphere(Point3D(50, 0,0), 40);
-    sphere->setMaterial(new Phong(Colors::white));
-    add_object(sphere);
+    Sphere* plastic_sphere = new Sphere(Point3D(50, 0,0), 40);
+    plastic_sphere->setMaterial(new Plastic(Colors::white));
+    add_object(plastic_sphere);
     
-    
+    Sphere* metal_sphere = new Sphere(Point3D(-50, 0, 60), 40);
+    metal_sphere->setMaterial(new Metal(Colors::blue));
+    add_object(metal_sphere);
 }
 
 void World::render_scene() {
