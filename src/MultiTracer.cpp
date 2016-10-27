@@ -24,7 +24,7 @@ const RGBColor MultiTracer::trace_ray(const Ray& ray, const std::vector<Geometry
     if (sr.hit) {
         float shadow_modifier = 1;
         if (trace_shadow_ray(sr)){
-            shadow_modifier = 0.25;
+            shadow_modifier = 0.4;
         }
         return sr.material_ptr->shade(sr) * shadow_modifier;
     }
