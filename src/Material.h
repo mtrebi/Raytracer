@@ -24,7 +24,6 @@ public:
 
 public:
     RGBColor color;
-    float f_specular_reflection;
 };
 
 
