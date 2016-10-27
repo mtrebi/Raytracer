@@ -19,8 +19,8 @@ MultiTracer::MultiTracer(World * world_ptr)
     
 }
 
-const RGBColor MultiTracer::trace_ray(const Ray& ray, const int depth) const{
-    ShadeRec sr = m_world_ptr->hit_bare_bones_obj(ray);
+const RGBColor MultiTracer::trace_ray(const Ray& ray, const std::vector<GeometryObject*> ignore, const int depth) const{
+    ShadeRec sr = m_world_ptr->hit_bare_bones_obj(ray, ignore);
     if (sr.hit) {
         float shadow_modifier = 1;
         if (trace_shadow_ray(sr)){
