@@ -22,12 +22,9 @@ const RGBColor Mirror::shade(const ShadeRec& sr) const {
     std::vector<GeometryObject*> ignore_self = std::vector<GeometryObject*>();
     ignore_self.push_back(sr.obj_ptr);
     const Ray reflected_ray = Ray(sr.hit_point, R);
-    
-    
+
     const RGBColor base_reflected_color = sr.world_ptr->m_tracer_ptr->trace_ray(reflected_ray, ignore_self);
     
-    
-    // tengo que modificar el color de sr con los atributos de la posicion actual
     ShadeRec sr_aux;
     sr_aux.hit = sr.hit;
     sr_aux.hit_normal = sr.hit_normal;
@@ -36,9 +33,5 @@ const RGBColor Mirror::shade(const ShadeRec& sr) const {
     sr_aux.material_ptr = new Flat(base_reflected_color);
     sr_aux.world_ptr = sr.world_ptr;
     
-    RGBColor shaded_color = Phong::shade(sr_aux);
-    
-    return shaded_color;
-   // return color;
-
+    return Phong::shade(sr_aux);
 };
