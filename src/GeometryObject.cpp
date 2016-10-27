@@ -7,7 +7,6 @@
 #include "GeometryObject.h"
 
 GeometryObject::GeometryObject(){
-    m_color = RGBColor(1,0,0);
 }
 
 GeometryObject::~GeometryObject(){
