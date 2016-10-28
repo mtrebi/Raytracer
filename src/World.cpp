@@ -26,6 +26,7 @@
 #include "Chalk.h"
 #include "Metal.h"
 #include "Mirror.h"
+#include "Refract.h"
 
 World::World(){
     m_vp = ViewPlane(640, 480, 1.0);
@@ -84,8 +85,11 @@ void World::build_cornel_box(){
     Ambient * ambient_ptr = new Ambient(1, RGBColor(.3,.3,.3));
     set_ambient(ambient_ptr);
     
-    Light * point_ptr = new Point(Point3D(0, 55, 75), 1, Colors::red);
+    Light * point_ptr = new Point(Point3D(0, 55, 95), 1, Colors::red);
     add_light(point_ptr);
+    
+    Light * point_ptr2 = new Point(Point3D(50, 55, 75), 1, Colors::white);
+    add_light(point_ptr2);
     
     // Build objects
     Sphere* plastic_sphere = new Sphere(Point3D(50, 0,0), 40);
@@ -99,6 +103,10 @@ void World::build_cornel_box(){
     Sphere* mirror_sphere = new Sphere(Point3D(-60, 70, 0), 20);
     mirror_sphere->setMaterial(new Mirror());
     add_object(mirror_sphere);
+    
+    Sphere* water_sphere = new Sphere(Point3D(0, -30, 250), 20);
+    water_sphere->setMaterial(new Refract(Colors::cyan, 1.33));
+    add_object(water_sphere);
 }
 
 void World::render_scene() {
