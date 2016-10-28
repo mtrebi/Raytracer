@@ -25,7 +25,7 @@ public:
     const virtual RGBColor shade(const ShadeRec& sr) const override;
 
 protected:
-    const float Ka = 0.2;
+    float Ka = 0.2;
     float Kd;
     float Ks;
     float specular_e;
