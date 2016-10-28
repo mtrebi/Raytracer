@@ -24,14 +24,18 @@ const RGBColor Mirror::shade(const ShadeRec& sr) const {
     const Ray reflected_ray = Ray(sr.hit_point, R);
 
     const RGBColor base_reflected_color = sr.world_ptr->m_tracer_ptr->trace_ray(reflected_ray, ignore_self);
-    
-    ShadeRec sr_aux;
-    sr_aux.hit = sr.hit;
-    sr_aux.hit_normal = sr.hit_normal;
-    sr_aux.hit_point = sr.hit_point;
-    sr_aux.ray = sr.ray;
-    sr_aux.material_ptr = new Flat(base_reflected_color);
-    sr_aux.world_ptr = sr.world_ptr;
-    
-    return Phong::shade(sr_aux);
+    RGBColor final_color;
+    if (sr.hit){
+        ShadeRec sr_aux;
+        sr_aux.hit = sr.hit;
+        sr_aux.hit_normal = sr.hit_normal;
+        sr_aux.hit_point = sr.hit_point;
+        sr_aux.ray = sr.ray;
+        sr_aux.material_ptr = new Flat(base_reflected_color);
+        sr_aux.world_ptr = sr.world_ptr;
+        final_color = Phong::shade(sr_aux);
+    }else {
+        final_color = sr.world_ptr->BACKGROUND_COLOR;
+    }
+    return final_color;
 };
