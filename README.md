@@ -6,7 +6,7 @@ My raytracer is quite basic and simple and includes the following features:
 * Shadows: Simulate shadows using Shadow Rays to multiple light sources. The shadows can be softer or harder depending on the number of lights that illuminate them.
 * Phong illumination model to simulate simulate ambient, colored diffuse and colored specular illumination.
 * Mirror reflection: Perfect reflection for mirrors.
-* Refreaction: Refraction of light depending on the refraction index of the materials.
+* Refraction: Refraction of light depending on the refraction index of the materials.
 * Anti-aliasing: Regular sampling technique.
 * Multiple cameras: perspective and orthogonal.
 * Easy to extend. I took care to design the raytracer folowing the software principles. It is very to modify or extend any of the previous features, for example, to add another material, camera or sampling method.
@@ -26,8 +26,11 @@ The Ray-Sphere intersection can also be calculated using the geometric way using
 
 ### Primary rays
 
+[flat shading]
+
 ### Phong illumination
 
+[flat shading vs phong]
 
 ### Shadow rays
 
@@ -38,13 +41,17 @@ The Ray-Sphere intersection can also be calculated using the geometric way using
 ### Refracted rays
 
 ### Sampling
+To avoid aliasing and increase the quality of the image, I implemented a very simple _Sampler_ virtual class that defines the common functions of the differents samplers, the most obvious one is the pure virtual _GenerateSamples_ function. This function must be implemented by each concrete sampler that we want to add. In my case I created a _Regular_ sampler. Is very basic but it is enough to avoid most of the aliasing of the image and allowing better quaility images.
 
+[image w aliasing] vs [image w/o aliasing]
 
 ## Results
+In the next image we can see the final result of the Ray Tracer with a 256-Regular Sampler with and all of its features.
 
+[final image with all]
 
 ## References
-I've looked on many websites to help me understand the basics of ray tracing but, I'll only reference the two most important:
+I've looked on many websites to help me understand the basics of ray tracing but, I'll only reference the most important two:
 
 * [ScratchAPixel](http://www.scratchapixel.com/index.php#3d-basic-rendering): Explains step by step how to implement and how a raytracer works. Highly recommended.
 * [Ray Tracing from the ground up](http://www.raytracegroundup.com/). This book explains EVERYTHING related to raytracing. Sometimes it goes very deep. It is a very nice book and it explains how to implement a ray tracer completely from scratch. It has pseudocode and code to help you. My raytracer is based on the ray tracer explained in the firsts chapters of this book and I use their utils classes (Vectors, Points...).
