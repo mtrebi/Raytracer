@@ -9,14 +9,21 @@ My raytracer is quite basic and simple and includes the following features:
 * Refreaction: Refraction of light depending on the refraction index of the materials.
 * Anti-aliasing: Regular sampling technique.
 * Multiple cameras: perspective and orthogonal.
-* Easy to extend. I took care to design a system that was easy to modify and extend. Is very to extend any of the previous feature, for example to add another material or another sampling method.
+* Easy to extend. I took care to design the raytracer folowing the software principles. It is very to modify or extend any of the previous features, for example, to add another material, camera or sampling method.
 
 ## Architecture
 
 
 
 ## Raytracer
-## Intersections
+### Objects and intersections
+The class _GeometryObject_ is a pure virtual class parent of all real objects that can be placed on the World or Scene. This class has a pure virtual method called _hit_ that should be implemented in the derived class. This method is used to check wheter a Ray intersects the object or not and get back the information about the intersection (point, normal...).Any new real object like a Box should inherit from _GeometryObject_ and should implement the _hit_ function.
+
+To calculate the Ray-Plane and Ray-Sphere intersection I've used the implicit surface equations, knowing that the hit point must belong to the Ray and must be on the Surface of the Plane or Sphere.
+
+The Ray-Sphere intersection can also be calculated using the geometric way using cos/sin and the Pythagoras theorem instead of using the surface equation. I believe the geometric way is faster than the analytical.
+
+
 ### Primary rays
 
 ### Phong illumination
