@@ -11,11 +11,8 @@ My raytracer is quite basic and simple and includes the following features:
 * Multiple cameras: perspective and orthogonal.
 * Easy to extend. I took care to design the raytracer folowing the software principles. It is very to modify or extend any of the previous features, for example, to add another material, camera or sampling method.
 
-## Architecture
-
-
-
 ## Raytracer
+### Architecture
 ### Objects and intersections
 The class _GeometryObject_ is a pure virtual class parent of all real objects that can be placed on the World or Scene. This class has a pure virtual method called _hit_ that should be implemented in the derived class. This method is used to check wheter a Ray intersects the object or not and get back the information about the intersection (point, normal...).Any new real object like a Box should inherit from _GeometryObject_ and should implement the _hit_ function.
 
@@ -25,8 +22,15 @@ The Ray-Sphere intersection can also be calculated using the geometric way using
 
 
 ### Primary rays
+A basic raytracer the only thing that it does is throwing rays from an "specific position and direction" through the center of each pixel. Then, the algorithm checks if the ray intersects any of the objects of the scene. If it does, it only retrieves the closest one and gets the color of the hitpoint. This will be the color of the pixel. If the ray doesn't hit any object, we will assign a background color for the pixel.
 
 [flat shading]
+
+This is how a ray tracer works. Now, depending on the camera type, the origin and the direction of the ray may vary, allowing us to generate different kind of images. Here, we are going to focus on the perspective camera because it works very close as our eyes perceive the world.
+
+In a perspective camera, each ray starts at the camera position (determined by different parameters) as goes through the center of each pixel. Thus, each ray has the same origin, but different direction.
+
+[perspective-view]
 
 ### Phong illumination
 
