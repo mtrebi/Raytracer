@@ -103,7 +103,7 @@ This is the final image of my Ray Tracer with all its features and 256 samples p
 ![Image with regular samplingh with 256 samples](https://github.com/mtrebi/Raytracer/blob/master/images/final-256-sampling.bmp "Image with regular samplingh with 256 samples]")
 
 ## Future work
-* Use a more realistic way to simulate global illumination: Photon Mapping or Radiosity.
+* Update it to a Path Tracer to create more realistic images using a better global illumination system.
 * Use the GPU to increase its speed.
 * Real time rendering.
 
