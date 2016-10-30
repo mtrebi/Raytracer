@@ -16,5 +16,5 @@ Flat::Flat(const RGBColor& c)
 }
 
 const RGBColor Flat::shade(const ShadeRec& sr) const {
-    return sr.world_ptr->m_ambient->get_color(sr);
+    return color;
 }
