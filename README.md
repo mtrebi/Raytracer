@@ -1,7 +1,7 @@
 # Raytracer in C++
 ## Introduction
 The goal of this project was to become familiar with C++ and graphics stuff while having fun. It was a really amazing project and I encourage everyone to do it if you like graphics.
-My raytracer is quite basic and simple and includes the following features:
+My raytracer is a backwards raytracer. Is quite basic and simple and includes the following features:
 * Basic shapes: Planes and Spheres.
 * Shadows: Simulate shadows using Shadow Rays to multiple light sources. The shadows can be softer or harder depending on the number of lights that illuminate them.
 * Phong illumination model to simulate simulate ambient, colored diffuse and colored specular illumination.
@@ -22,9 +22,9 @@ The Ray-Sphere intersection can also be calculated using the geometric way using
 
 
 ### Primary rays
-A basic raytracer the only thing that it does is throwing rays from an "specific position and direction" through the center of each pixel. Then, the algorithm checks if the ray intersects any of the objects of the scene. If it does, it only retrieves the closest one and gets the color of the hitpoint. This will be the color of the pixel. If the ray doesn't hit any object, we will assign a background color for the pixel.
+A basic (backwards) raytracer the only thing that it does is throwing rays from an "specific position and direction" through the center of each pixel. Then, the algorithm checks if the ray intersects any of the objects of the scene. If it does, it only retrieves the closest one and gets the color of the hitpoint. This will be the color of the pixel. If the ray doesn't hit any object, we will assign a background color for the pixel.
 
-[flat shading]
+![Flat shading](https://github.com/mtrebi/Raytracer/blob/master/images/flat-shading.bmp "Flat shading example")
 
 This is how a ray tracer works. Now, depending on the camera type, the origin and the direction of the ray may vary, allowing us to generate different kind of images. Here, we are going to focus on the perspective camera because it works very close as our eyes perceive the world.
 
@@ -33,16 +33,57 @@ In a perspective camera, each ray starts at the camera position (determined by d
 [perspective-view]
 
 ### Phong illumination
+If we only use basic ray tracing the image doesn't look real. We only got the colors and the shape of the objects. To create a more realistic image, we are going to use the [Phong equation](https://en.wikipedia.org/wiki/Phong_shading). With this equation we can shade the original color of the object depending on several parameters (view angle, normal of the surface, number of lights, and so on). I am not going to focus on the Phong equation here because it is very well explained in other places. I'll simply say that there is:
+* Ambient component: Simulates the global light on the scene. It is a constant.
+* Diffuse component: Simulates the reflected light in all directions on a surface depending on the angle of incidence of the light on the surface (see [Lambertian reflectance](https://en.wikipedia.org/wiki/Lambertian_reflectance))
+* Specular component: Simulates the reflected light in an specific direction (the view direction) given the incidince of the light on the surface. 
 
-[flat shading vs phong]
+These are the results:
+
+Ambient and diffuse components:
+
+[diffuse]
+
+Ambient and specular components:
+
+[specular]
+
+Phong complete:
+
+[all together]
+
+#### Extra
+To create an even better image I made some changes on the Phong equation:
+The first change was to clamp to zero negative values of dot product operations.
+There is an extra parameter in my phong equation that indicated how much the light's color should dominate over the object color. A high value will cause the object to be colored by the light color. On the contrary, the object will be just brighter but its base color won't be modified.
+
+[phong-extra-parameter]
+
+I added an attenuator value for the lights based on distance. Objects farther from the light receive less light. This is very subtle but it improves the final result.
+
+[distace-atenuator]
 
 ### Shadow rays
+An image won't be realistic without hard shadows. A hard shadow is an area which doesn't receive direct light from the light sources. So, to add shadows, the simply thing that we do is, once the primary ray hit an object, we throw another ray (called shadow ray) from that position to the light sources. If the shadow ray can't reach any of the lights, it means that this area should be shadowed. Is that simple.
 
-[one light and many lights]
+[hard shadows]
+
+*Note: Do you remember that I said that this was a backwards ray tracer? Here is the reason. In the real world, the light throws photons in all directions and only a part of them impact in our eyes. Because, doing this is very expensive, what we do is the opposite. We throw rays from our eyes (the camera) to the objects, and then from the objects to the lights to ensure that they are visible.
+
+#### Extra
+When we have multiple lights, objects have multiple shadows. One (like) soft-shadow per light and a harder-shadow when the soft-shadows intersect. To simulate this, I modified the shadow rays in order to count, how many lights of the scene lighted each position and then I applied a shadow proportionally to these number of lights.
+
+[soft-hard shadows]
 
 ### Reflected rays
+Reflected rays are needed to implement mirrors. Their behavior is very simple. When the primary ray hits the surface of a mirror, you have to calculate the [reflected direction](https://en.wikipedia.org/wiki/Reflection_(physics)) (It is pure physics). Once you have it, you just throw a secondary ray with the origin where the primary ray hit and with the reflected direction. Then, you follow the same process as you did with the primary ray (in fact, the ray function that I used is the same). If the ray hits something, you get its color, otherwhise, background color.
+
+[reflected]
 
 ### Refracted rays
+The process to implement refracted rays work is similar to the previous process but more complex. When the primary ray this the surface of the material, you have to calculate the new direction of the ray given the [refraction index](https://en.wikipedia.org/wiki/Refraction) of the previous and new material. Then, you create a new ray from the surface hitpoint with the direction determined by the refraction index. This ray will travel through the interior of the material until it will hit the surface of the material. When this happens, you have to create a new ray that starts on this hitpoint and its direction its determined, as before, by the refractions indices. Finally, this ray is treated as a primary ray. If it hits something, you get its color, otherwise, background color.
+
+[refracted]
 
 ### Sampling
 To avoid aliasing and increase the quality of the image, I implemented a very simple _Sampler_ virtual class that defines the common functions of the differents samplers, the most obvious one is the pure virtual _GenerateSamples_ function. This function must be implemented by each concrete sampler that we want to add. In my case I created a _Regular_ sampler. Is very basic but it is enough to avoid most of the aliasing of the image and allowing better quaility images.
