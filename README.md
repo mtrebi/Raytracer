@@ -12,7 +12,14 @@ My raytracer is a backwards raytracer. Is quite basic and simple and includes th
 * Easy to extend. I took care to design the raytracer folowing the software principles. It is very to modify or extend any of the previous features, for example, to add another material, camera or sampling method.
 
 ## Raytracer
-### Architecture
+### Dependency diagram
+Here is a simple dependency diagram of the World class. 
+
+![Dependency diagram](https://github.com/mtrebi/Raytracer/blob/master/images/class_diagram.png "Simple dependency diagram")
+
+Each of its dependencies (except ViewPlane) are pure virtual classes that define a set of functions that should be implemented by the subclasses. This way, the system is decoupled and can be easily modified to, add another _Tracer_, _Sampler_ or _GeometryObject_.For further details look at the code, it is very easy to understand.
+
+
 ### Objects and intersections
 The class _GeometryObject_ is a pure virtual class parent of all real objects that can be placed on the World or Scene. This class has a pure virtual method called _hit_ that should be implemented in the derived class. This method is used to check wheter a Ray intersects the object or not and get back the information about the intersection (point, normal...).Any new real object like a Box should inherit from _GeometryObject_ and should implement the _hit_ function.
 
@@ -94,6 +101,11 @@ For my RayTracer I implemented a very simple virtual class _Sampler_ that define
 This is the final image of my Ray Tracer with all its features and 256 samples per pixel:
 
 ![Image with regular samplingh with 256 samples](https://github.com/mtrebi/Raytracer/blob/master/images/final-256-sampling.bmp "Image with regular samplingh with 256 samples]")
+
+## Future work
+* Use a more realistic way to simulate global illumination: Photon Mapping or Radiosity.
+* Use the GPU to increase its speed.
+* Real time rendering.
 
 ## References
 I've looked on many websites to help me understand the basics of ray tracing but, I'll only reference the most important two:
