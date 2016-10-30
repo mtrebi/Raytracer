@@ -76,7 +76,7 @@ An image won't be realistic without hard shadows. A hard shadow is an area which
 
 ![Hard shadows with multiple light sources](https://github.com/mtrebi/Raytracer/blob/master/images/hard-shadows.bmp "Hard shadows with multiple light sources")
 
-*Note: Do you remember that I said that this was a backwards ray tracer? Here is the reason. In the real world, the light throws photons in all directions and only a part of them impact in our eyes. Because, doing this is very expensive, what we do is the opposite. We throw rays from our eyes (the camera) to the objects, and then from the objects to the lights to ensure that they are visible.
+*Note: Do you remember that I said that this was a backwards ray tracer? Here is the reason. In the real world, the light throws photons in all directions and only a part of them impact in our eyes. Because, doing this is very expensive, what we do is the opposite. We throw rays from our eyes (the camera) to the objects, and then from the objects to the lights to ensure that they are visible.*
 
 #### Extra
 When we have multiple lights, objects have multiple shadows. One (like) soft-shadow per light and a harder-shadow when the soft-shadows intersect. To simulate this, I modified the shadow rays in order to count, how many lights of the scene lighted each position and then I applied a shadow proportionally to these number of lights.
