@@ -45,6 +45,7 @@ Ambient and specular components:
 ![Phong - ambient and specular components](https://github.com/mtrebi/Raytracer/blob/master/images/phong-specular.bmp "Ambient and specular components of Phong shading")
 
 Phong complete:
+
 ![Phong with all components](https://github.com/mtrebi/Raytracer/blob/master/images/phong-complete.bmp "Phong shading with all components")
 
 
