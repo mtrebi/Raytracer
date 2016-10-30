@@ -36,8 +36,6 @@ If we only use basic ray tracing the image doesn't look real. We only got the co
 * Diffuse component: Simulates the reflected light in all directions on a surface depending on the angle of incidence of the light on the surface (see [Lambertian reflectance](https://en.wikipedia.org/wiki/Lambertian_reflectance))
 * Specular component: Simulates the reflected light in an specific direction (the view direction) given the incidince of the light on the surface. 
 
-These are the results:
-
 Ambient and diffuse components:
 
 ![Phong - ambient and diffuse components](https://github.com/mtrebi/Raytracer/blob/master/images/phong-diffuse.bmp "Ambient and diffuse components of Phong shading")
@@ -45,6 +43,7 @@ Ambient and diffuse components:
 Ambient and specular components:
 
 ![Phong - ambient and specular components](https://github.com/mtrebi/Raytracer/blob/master/images/phong-specular.bmp "Ambient and specular components of Phong shading")
+
 Phong complete:
 ![Phong with all components](https://github.com/mtrebi/Raytracer/blob/master/images/phong-complete.bmp "Phong shading with all components")
 
@@ -57,6 +56,7 @@ The first change was to clamp to zero negative values of dot product operations.
 There is an extra parameter in my phong equation that indicated how much the light's color should dominate over the object color. A high value will cause the object to be colored by the light color. On the contrary, the object will be just brighter but its base color won't be modified.
 
 This is the result:
+
 ![Phong with an extra parameter](https://github.com/mtrebi/Raytracer/blob/master/images/phong-new-parameter.bmp "Phong with an extra parameter")
 
 I added an attenuator value for the lights based on distance. Objects farther from the light receive less light. This is very subtle but it improves the final result:
