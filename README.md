@@ -103,9 +103,13 @@ This is the final image of my Ray Tracer with all its features and 256 samples p
 ![Image with regular samplingh with 256 samples](https://github.com/mtrebi/Raytracer/blob/master/images/final-256-sampling.bmp "Image with regular samplingh with 256 samples]")
 
 ## Future work
-* Update it to a Path Tracer to create more realistic images using a better global illumination system.
-* Use the GPU to increase its speed.
-* Real time rendering.
+* Real time raytracing
+* Shadows and penumbra (using light sampling)
+* Ambient Occlusion for a better GI
+* Path Tracing with multiples bounces and  Russian Roulette (Montecarlo technique)
+* Depth of field
+* Caustics
+* GPU Implementation
 
 ## References
 I've looked on many websites to help me understand the basics of ray tracing but, I'll only reference the most important two:
