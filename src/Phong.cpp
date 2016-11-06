@@ -34,7 +34,7 @@ const RGBColor Phong::shade(const ShadeRec& sr) const {
         diffuse += Kd * std::fmax(L*N,0) * (light_color_inf * Lcolor +  (1 - light_color_inf) * sr.material_ptr->color);
         specular += Ks * pow(std::fmax(R*V,0), specular_e) * (light_color_inf * Lcolor +  (1 - light_color_inf) * sr.material_ptr->color);
     }
-    const RGBColor ambient = Ka * sr.world_ptr->m_ambient->get_color(sr);
+    const RGBColor ambient = Ka * sr.material_ptr->color;
     
     return (ambient + diffuse + specular);
 }
