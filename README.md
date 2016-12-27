@@ -63,7 +63,7 @@ To create an even better image I made some changes on the Phong equation:
 The first change was to clamp to zero negative values of dot product operations.
 There is an extra parameter in my phong equation that indicated how much the light's color should dominate over the object color. A high value will cause the object to be colored by the light color. On the contrary, the object will be just brighter but its base color won't be modified. In the next image we can see only the color transfered to the object from a red light:
 
-![Color transfer from a red light](https://github.com/mtrebi/Raytracer/blob/master/images/color_transfer.png "Color transfer from a red light")
+![Color transfer from a red light](https://github.com/mtrebi/Raytracer/blob/master/images/color_transfer.PNG "Color transfer from a red light")
 
 If we apply the previous phong equation with the campled dot product and the color transfer from lights this is the result:
 
