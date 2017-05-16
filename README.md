@@ -12,7 +12,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Reflected rays](https://github.com/mtrebi/Raytracer#reflected-rays)  <br/> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Refracted rays](https://github.com/mtrebi/Raytracer#refracted-rays)  <br/> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Sampling](https://github.com/mtrebi/Raytracer#sampling)  <br/> 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Rendering paths](https://github.com/mtrebi/rasterizer/blob/master/README.md#rendering-
 &nbsp;[Future work](https://github.com/mtrebi/Raytracer#future-work)  <br/> 
 &nbsp;[References](https://github.com/mtrebi/Raytracer#references)  <br/> 
 
