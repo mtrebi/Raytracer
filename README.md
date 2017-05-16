@@ -1,5 +1,21 @@
 <a href='http://www.recurse.com' title='Made with love at the Recurse Center'><img src='https://cloud.githubusercontent.com/assets/2883345/11325206/336ea5f4-9150-11e5-9e90-d86ad31993d8.png' height='20px'/></a>
 # Raytracer in C++
+
+# Table of Contents
+&nbsp;[Introduction](https://github.com/mtrebi/Raytracer#introduction)  <br/> 
+&nbsp;[Raytracer](https://github.com/mtrebi/Raytracer#raytracer)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Dependency Diagram](https://github.com/mtrebi/Raytracer#dependency-diagram)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Object and intersections](https://github.com/mtrebi/Raytracer#objects-and-intersections)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Primary rays](https://github.com/mtrebi/Raytracer#primary-rays)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Phong illumination](https://github.com/mtrebi/Raytracer#phong-illumination)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Shadow rays](https://github.com/mtrebi/Raytracer#shadow-rays)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Reflected rays](https://github.com/mtrebi/Raytracer#reflected-rays)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Refracted rays](https://github.com/mtrebi/Raytracer#refracted-rays)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Sampling](https://github.com/mtrebi/Raytracer#sampling)  <br/> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Rendering paths](https://github.com/mtrebi/rasterizer/blob/master/README.md#rendering-
+&nbsp;[Future work](https://github.com/mtrebi/Raytracer#future-work)  <br/> 
+&nbsp;[References](https://github.com/mtrebi/Raytracer#references)  <br/> 
+
 ## Introduction
 The goal of this project was to become familiar with C++ and graphics stuff while having fun. It was a really amazing project and I encourage everyone to do it if you like graphics.
 My raytracer is a backwards raytracer. Is quite basic and simple and includes the following features:
