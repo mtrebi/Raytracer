@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Ortographic.h
  * Author: maru
  *
@@ -16,12 +16,14 @@
 
 #include "Camera.h"
 
+class World;
+
 class Orthographic: public Camera{
     public:
         Orthographic();
         Orthographic(const Point3D& eye, const Point3D& lookat);
         ~Orthographic();
-        
+
         virtual Vector3D calculate_ray_dir(const Point2D& p) override;
         virtual void render_scene(World *world) override;
 };

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Regular.h
  * Author: maru
  *
@@ -13,14 +13,15 @@
 
 #ifndef REGULAR_H
 #define REGULAR_H
+#include "Sampler.h"
 
 class Regular : public Sampler {
     public:
         Regular();
         Regular(const int num_samples, const int num_sets = 1);
 
-        ~Regular();
-        
+        ~Regular() = default;
+
         virtual void generate_samples() override;
 };
 

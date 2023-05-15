@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Plane.h
  * Author: maru
  *
@@ -28,7 +28,7 @@ public:
 private:
     Point3D m_point;
     Normal m_normal;
-        
+
 };
 
 #endif /* PLANE_H */

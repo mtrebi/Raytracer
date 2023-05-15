@@ -18,7 +18,7 @@ Sampler::Sampler(const int num_samples, const int num_sets)
 
 
 Sampler::~Sampler(){
-    
+
 }
 
 const int Sampler::get_n_samples() const{
@@ -30,6 +30,6 @@ const Point2D& Sampler::next_sample(){
     if (m_count % m_num_samples == 0){ // New Pixel
         m_jump = rand() % m_num_sets;
     }
-    
+
     return m_samples[m_jump + m_count++ % (m_num_samples * m_num_sets)];
-}   
+}

@@ -20,8 +20,9 @@ class World;
 #include "Normal.h"
 #include "Ray.h"
 #include "RGBColor.h"
-#include "GeometryObject.h"
+
 class GeometryObject;
+
 struct ShadeRec {
     bool hit;
     Material* material_ptr;

@@ -24,15 +24,15 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) {
     const double c = (ray.o - m_center) * (ray.o - m_center) - (m_radius * m_radius);
     const double denom = 2 * a;
     const double disc = b * b - 4 * a * c;
-    
-    if (disc < 0) { 
+
+    if (disc < 0) {
         return false;
     }
-    
+
     const double sq_disc = sqrt(disc);
-    
+
     const double t_minus = (-b - sq_disc) / denom;
-    
+
     if (t_minus > kEpsilon){
         tmin = t_minus;
         sr.hit = true;
@@ -43,7 +43,7 @@ bool Sphere::hit (const Ray &ray, double& tmin, ShadeRec& sr) {
         sr.obj_ptr = this;
         return true;
     }
-    
+
     const double t_plus = (-b + sq_disc) / denom;
 
     if (t_plus > kEpsilon){

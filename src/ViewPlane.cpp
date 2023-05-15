@@ -7,7 +7,7 @@
 # include "ViewPlane.h"
 # include "Regular.h"
 ViewPlane::ViewPlane(){
-    
+
 }
 
 ViewPlane::ViewPlane(const int width, const int height, const float gamma){
@@ -15,7 +15,7 @@ ViewPlane::ViewPlane(const int width, const int height, const float gamma){
     this->height = height;
     this->gamma = gamma;
     this->inv_gamma = 1 / gamma;
-    
+
     this->sampler_ptr = new Regular(25,1);
 }
 
@@ -36,5 +36,5 @@ const int ViewPlane::get_n_samples() const {
     if (sampler_ptr == nullptr){
         return 0;
     }
-    return sampler_ptr->get_n_samples(); 
+    return sampler_ptr->get_n_samples();
 }

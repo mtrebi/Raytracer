@@ -41,7 +41,7 @@ Point2D::~Point2D(void) {}
 
 // ------------------------------------------------ assignment operator
 
-Point2D& 							
+Point2D&
 Point2D::operator= (const Point2D& rhs) {
 	if (this == &rhs)
 		return (*this);

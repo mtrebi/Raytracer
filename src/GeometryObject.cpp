@@ -10,5 +10,5 @@ GeometryObject::GeometryObject(){
 }
 
 GeometryObject::~GeometryObject(){
-    
+
 }

@@ -4,10 +4,14 @@
  * and open the template in the editor.
  */
 
-# include "Mirror.h"
-# include <vector>
-# include "Constants.h"
-# include "Flat.h"
+#include <vector>
+#include "Mirror.h"
+#include "Constants.h"
+#include "Flat.h"
+#include "Vector3D.h"
+#include "GeometryObject.h"
+#include "World.h"
+#include "Tracer.h"
 
 Mirror::Mirror(const float kd, const float ks, const float sp_e, const float lci)
         : Phong(Colors::white, kd, ks, sp_e, lci){
@@ -17,8 +21,8 @@ Mirror::Mirror(const float kd, const float ks, const float sp_e, const float lci
 const RGBColor Mirror::shade(const ShadeRec& sr) const {
     const Vector3D V = -sr.ray.d;
     const Normal N = sr.hit_normal;
-    const Vector3D R = 2*(V * N) * N - V;   
-    
+    const Vector3D R = 2*(V * N) * N - V;
+
     std::vector<GeometryObject*> ignore_self = std::vector<GeometryObject*>();
     ignore_self.push_back(sr.obj_ptr);
     const Ray reflected_ray = Ray(sr.hit_point, R);

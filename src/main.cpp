@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.cpp
  * Author: maru
  *
@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     world.build_cornel_box();
     world.render_scene();
     world.save_image("output.bmp");
-    
+
     return 0;
 }
 

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Material.h
  * Author: maru
  *
@@ -13,13 +13,16 @@
 
 #ifndef MATERIAL_H
 #define MATERIAL_H
+#include "RGBColor.h"
+
+class ShadeRec;
 
 class Material {
 public:
     Material();
     Material(const RGBColor& c);
     ~Material();
-    
+
     const virtual RGBColor shade(const ShadeRec& sr) const = 0;
 
 public:

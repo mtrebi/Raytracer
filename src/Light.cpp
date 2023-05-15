@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-# include "Light.h"
+#include "ShadeRec.h"
+#include "Light.h"
 #include "Ambient.h"
 
 Light::Light(){
-    
+
 }
 
 Light::Light(const float intensity, const RGBColor& color)
@@ -16,5 +17,5 @@ Light::Light(const float intensity, const RGBColor& color)
 }
 
 Light::~Light(){
-    
+
 }

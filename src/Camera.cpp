@@ -7,7 +7,7 @@
 # include "Camera.h"
 
 Camera::Camera(){
-    
+
 }
 
 Camera::Camera(const Point3D& eye, const Point3D& lookat, const float distance)
@@ -22,5 +22,5 @@ Camera::Camera(const Point3D& eye, const Point3D& lookat, const float distance)
 }
 
 Camera::~Camera(){
-    
+
 }
