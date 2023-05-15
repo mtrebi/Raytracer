@@ -4,17 +4,18 @@
  * and open the template in the editor.
  */
 
-# include "Material.h"
+#include "Material.h"
+#include "ShadeRec.h"
 
 Material::Material(){
-    
+
 }
 
 Material::Material(const RGBColor& c)
         : color(c) {
-    
+
 }
 
 Material::~Material(){
-    
+
 }

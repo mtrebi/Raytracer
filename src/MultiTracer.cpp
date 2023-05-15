@@ -4,22 +4,24 @@
  * and open the template in the editor.
  */
 
+#include <iostream>
 #include "MultiTracer.h"
 #include "World.h"
 #include "Material.h"
 #include "Constants.h"
+#include "ShadeRec.h"
 
 MultiTracer::MultiTracer()
     : Tracer() {
-    
+
 }
 
-MultiTracer::MultiTracer(World * world_ptr)
+MultiTracer::MultiTracer(World *world_ptr)
     : Tracer(world_ptr) {
-    
+
 }
 
-const RGBColor MultiTracer::trace_ray(const Ray& ray, const std::vector<GeometryObject*> ignore, const int depth) const{
+const RGBColor MultiTracer::trace_ray(const Ray& ray, const std::vector<GeometryObject*> ignore, const int depth) const {
     ShadeRec sr = m_world_ptr->hit_bare_bones_obj(ray, ignore);
     if (sr.hit) {
         return sr.material_ptr->shade(sr) * trace_shadow_ray(sr);
@@ -29,9 +31,8 @@ const RGBColor MultiTracer::trace_ray(const Ray& ray, const std::vector<Geometry
     }
 }
 
-#include <iostream>
 const float MultiTracer::trace_shadow_ray(const ShadeRec& sr) const {
-    const float shadow_min = .45;  
+    const float shadow_min = .45;
     int shadowed_by_n_lights = 0;
     for(const auto& light : m_world_ptr->m_lights){
         const Point3D ray_origin = sr.hit_point;
@@ -40,7 +41,7 @@ const float MultiTracer::trace_shadow_ray(const ShadeRec& sr) const {
         std::vector<GeometryObject*> ignore = std::vector<GeometryObject*>();
         ignore.push_back(sr.obj_ptr);
         ShadeRec sr_shadow = m_world_ptr->hit_bare_bones_obj(ray, ignore);
-        
+
         if (sr_shadow.hit && ray_origin.distance(sr_shadow.hit_point) < light->get_distance(ray_origin)){
             ++shadowed_by_n_lights;
         }

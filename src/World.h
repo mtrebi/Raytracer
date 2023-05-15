@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   World.h
  * Author: maru
  *
@@ -16,14 +16,14 @@
 
 #include "ViewPlane.h"
 #include "RGBColor.h"
-#include "GeometryObject.h"
 #include <vector>
-#include "MultiTracer.h"
 #include <string>
-#include "Camera.h"
 #include "Light.h"
 
 class Camera;
+class Tracer;
+class GeometryObject;
+class Ray;
 
 class World {
 public:
@@ -32,15 +32,15 @@ public:
     std::vector<Light*> m_lights;
     Light * m_ambient;
     ViewPlane m_vp;
-    Tracer * m_tracer_ptr;
-    Camera * m_camera_ptr;
+    Tracer *m_tracer_ptr;
+    Camera *m_camera_ptr;
 
     const RGBColor BACKGROUND_COLOR = RGBColor(0,0,0);
 
 public:
     World();
     ~World();
-    
+
     void add_object(GeometryObject* obj);
     void add_light(Light* light);
     void set_ambient(Light * light);
@@ -49,7 +49,6 @@ public:
     void render_scene();
     const ShadeRec hit_bare_bones_obj(const Ray& ray, const std::vector<GeometryObject*> ignore = std::vector<GeometryObject*>());
 
-    
     void open_window(const int hres, const int vres) const;
     void display_pixel(const int row, const int column, const RGBColor& pixel_color);
 

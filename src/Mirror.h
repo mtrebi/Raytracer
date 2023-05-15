@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Mirror.h
  * Author: maru
  *
@@ -19,10 +19,10 @@
 class Mirror : public Phong {
 public:
     Mirror(const float Kd = 1, const float Ks = 0.5, const float specular_e = 1, const float lci = 0.01);
-    ~Mirror();
-    
+    ~Mirror() = default;
+
     const virtual RGBColor shade(const ShadeRec& sr) const override;
-     
+
 };
 
 #endif /* MIRROR_H */

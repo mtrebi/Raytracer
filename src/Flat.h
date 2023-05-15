@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Flat.h
  * Author: maru
  *
@@ -20,7 +20,7 @@ public:
     Flat();
     Flat(const RGBColor& c);
     ~Flat();
-    
+
     const virtual RGBColor shade(const ShadeRec& sr) const override;
 
 };

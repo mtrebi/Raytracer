@@ -5,19 +5,22 @@
  */
 
 #include "Orthographic.h"
+#include "World.h"
+#include "Ray.h"
+#include "Tracer.h"
 
 Orthographic::Orthographic()
     : Camera(){
-    
+
 }
 
 Orthographic::Orthographic(const Point3D& eye, const Point3D& lookat)
     : Camera(eye, lookat, 0){
-    
+
 }
 
 Orthographic::~Orthographic(){
-    
+
 }
 
 Vector3D Orthographic::calculate_ray_dir(const Point2D& p){
@@ -28,7 +31,6 @@ Vector3D Orthographic::calculate_ray_dir(const Point2D& p){
 
 void Orthographic::render_scene(World * world){
     Ray ray;
-
 
     for (int x = 0; x < world->m_vp.width; ++x){
         for (int y = 0; y < world->m_vp.height; ++y){
@@ -41,7 +43,7 @@ void Orthographic::render_scene(World * world){
 
                 ray.o = Point3D(pixel.x, pixel.y, -100);
                 ray.d = calculate_ray_dir(pixel);
-                
+
                 pixel_color += world->m_tracer_ptr->trace_ray(ray);
             }
             pixel_color /= world->m_vp.get_n_samples();

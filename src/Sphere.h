@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Sphere.h
  * Author: maru
  *
@@ -23,7 +23,7 @@ class Sphere : public GeometryObject {
         Sphere();
         Sphere(const Point3D& center, const float radius);
         ~Sphere();
-        
+
         virtual bool hit (const Ray &ray, double& tmin, ShadeRec& sr) override;
     private:
         Point3D m_center;

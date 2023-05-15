@@ -5,20 +5,22 @@
  */
 
 # include "Perspective.h"
+#include "Ray.h"
+#include "Tracer.h"
 
 
 Perspective::Perspective()
     : Camera(){
-    
+
 }
 
 Perspective::Perspective(const Point3D& eye, const Point3D& lookat, const float distance)
     : Camera(eye, lookat, distance){
-    
+
 }
 
 Perspective::~Perspective(){
-    
+
 }
 
 Vector3D Perspective::calculate_ray_dir(const Point2D& p){
@@ -36,10 +38,10 @@ void Perspective::render_scene(World * world){
             RGBColor pixel_color;
             for (int s = 0; s < world->m_vp.get_n_samples(); ++s){
                 const Point2D sample = world->m_vp.sampler_ptr->next_sample();
-                const Point2D pixel = 
+                const Point2D pixel =
                     Point2D(x - 0.5 * (world->m_vp.width + sample.x),
                         y - 0.5 * (world->m_vp.height + sample.y));
-                
+
                 ray.d = calculate_ray_dir(pixel);
                 pixel_color += world->m_tracer_ptr->trace_ray(ray);
             }

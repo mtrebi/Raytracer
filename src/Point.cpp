@@ -5,19 +5,20 @@
  */
 
 
-# include "Point.h"
+#include "Point.h"
+#include "ShadeRec.h"
 
 Point::Point()
     : Light() {
-    
+
 }
 Point::Point(const Point3D& position, const float intensity, const RGBColor& color)
     : Light(intensity, color), m_position(position){
-    
+
 }
-    
+
 Point::~Point(){
-    
+
 }
 
 const float Point::get_distance(const Point3D& point) const{
@@ -33,4 +34,3 @@ const RGBColor Point::get_color(const ShadeRec& sr) const {
     const float distance_attenuator = 100/m_position.distance(sr.hit_point);
     return m_intensity * m_color * distance_attenuator;
 }
-        

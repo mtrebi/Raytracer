@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Camera.h
  * Author: maru
  *
@@ -17,18 +17,19 @@
 #include "Point3D.h"
 #include "Vector3D.h"
 #include "World.h"
+
 class Camera{
 protected:
     Point3D m_eye;
     Point3D m_lookat;
     Vector3D m_up, m_u, m_v, m_w;
     float m_distance_view_plane;
-    
+
 public:
     Camera();
     Camera(const Point3D& eye, const Point3D& lookat, const float distance);
     ~Camera();
-    
+
     virtual Vector3D calculate_ray_dir(const Point2D& p) = 0;
     virtual void render_scene(World *world) = 0;
 private:

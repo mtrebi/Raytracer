@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Light.h
  * Author: maru
  *
@@ -18,11 +18,13 @@
 #include "Vector3D.h"
 #include "RGBColor.h"
 
+class ShadeRec;
+
 class Light {
 public:
     Light();
     Light(const float intensity, const RGBColor& color);
-    
+
     virtual ~Light();
     virtual const float get_distance(const Point3D& point) const = 0;
     virtual const Vector3D get_direction(const Point3D& surface_point) const = 0;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Perspective.h
  * Author: maru
  *
@@ -21,7 +21,7 @@ class Perspective: public Camera{
         Perspective();
         Perspective(const Point3D& eye, const Point3D& lookat, const float distance);
         ~Perspective();
-        
+
         virtual Vector3D calculate_ray_dir(const Point2D& p) override;
         virtual void render_scene(World *world) override;
 };
